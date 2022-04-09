@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/cerrar"
+        android:title="Cerrar sesion" />
+    <item
+        android:id="@+id/botify"
+        android:icon="@mipmap/ic_launcher_asignament_noti"
+        android:title="Item"
+        app:showAsAction="always" />
+        <android:com.nex3z.notificationbadge.NotificationBadge
+        android:id="@+id/badge"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        app:nbMaxTextLength="2" />
+
+
+
+</menu>

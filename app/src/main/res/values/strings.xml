@@ -1,0 +1,86 @@
+<resources>
+    <string name="app_name">SITEAPP</string>
+
+    <string name="txv1"> Bienvenido Anonymus ^w^ </string>
+    <string name="txv2"> Atencion al Cliente </string>
+    <string name="txp1"> Usuario </string>
+    <string name="txp2"> Contraseña </string>
+    <string name="btn1"> Iniciar Sesion </string>
+
+
+    <string name="txv3"> Departamentos - Atencion usuario  ^w^  </string>
+    <string name="btn2"> Departamento Administrativo </string>
+    <string name="btn3"> Departamento Tecnico </string>
+
+    <string name="textsugerencia"> Bienvenido - Bandeja de Sugerencias Anonymus ^w^ </string>
+    <string name="textosugerencia"> Sugerencia ^w^ </string>
+    <string name="sugerencias"> Bandeja de sugerencias </string>
+    <string name="botonsugerencia"> Enviar Sugerencia </string>
+    <string name="botonmostrarusuario"> Mostrar Incidencias </string>
+    <string name="botonregresarsugerencia"> Regresar </string>
+
+    <string name="textnotificacion"> Bienvenido Envio de Notificaciones Anonymus ^w^ </string>
+    <string name="textonotificacion"> Notificacion ^w^ </string>
+    <string name="notificaciones"> Bandeja de sugerencias </string>
+    <string name="botonnotificaciones"> Enviar Notificacion </string>
+    <string name="botonregresarnotificacion"> Regresar </string>
+
+    <string name="txv30"> Menu principal Anonymust ^w^  </string>
+    <string name="btn30"> Interfaz usuario </string>
+    <string name="btn40"> Interfaz tecnico </string>
+    <string name="btn22"> Salir </string>
+
+    <string name="txv4tec"> Anonymus: Seleccione su requerimiento ^w^  </string>
+    <string name="txp4tec"> Comentario </string>
+    <string name="btn4tec"> Registrar Ticket </string>
+    <string name="btn5tec"> Seleccione fecha </string>
+    <string name="btn6tec"> Regresar </string>
+    <string name="btn7tec"> Salir </string>
+
+
+    <string name="txv4adm"> Anonymus : Seleccione su requerimiento ^w^  </string>
+    <string name="txp4adm"> Comentario </string>
+    <string name="btn4adm"> Registrar Ticket </string>
+    <string name="btn5adm"> Seleccione fecha </string>
+    <string name="btn6adm"> Regresar </string>
+    <string name="btn7adm"> Salir </string>
+
+
+    <string name="txv5"> Nivel Tecnico Anonymus^w^  </string>
+    <string name="btn6"> Registrar Usuario </string>
+    <string name="btn7"> Mostrar Incidencias </string>
+    <string name="btn8"> Ver Graficos Incidencias </string>
+    <string name="botonenvionotificacion"> Enviar notificacion </string>
+
+    <string name="txp6"> Nombre Titular </string>
+    <string name="txp7"> Cedula </string>
+    <string name="txp8"> Contrasena </string>
+    <string name="txp9"> telefono </string>
+    <string name="txp10"> Direccion </string>
+    <string name="txp11"> Nodo </string>
+    <string name="txp12"> Ap </string>
+    <string name="txp13"> Otro </string>
+    <string name="btn9"> Registrar </string>
+    <string name="btn10"> Consultar con C.I </string>
+    <string name="btn11"> Modificar </string>
+    <string name="btn12"> Regresar </string>
+    <string name="btn13"> Salir </string>
+
+
+    <string name="btn14">  </string>
+    <string name="btn15"> Salir </string>
+    <string name="btn16"> Sesion Tecnico </string>
+
+
+    <string name="txv14"> Ver Incidencias </string>
+
+    <string name="btn20"> Salir </string>
+    <string name="btn21"> Salir </string>
+    <string name="incidencias_administrativas"> Incidencias_Administrativas </string>
+    <string name="incidencias_tecnicas"> Incidencias_Tecnicas </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="frlb">Panel Grafico de Incidencias...</string>
+    <string name="frBlank">Panel de Incidencias...</string>
+
+
+</resources>
