@@ -73,17 +73,18 @@ public class frlnAdu extends Fragment {
 
         itemRec=new ArrayList();
 
-        String URL = "http://192.168.101.2/usuarios_bd/incidencias_usuario1.php";
+        String URL = "http://192.168.101.5/conexion_php/buscar_incidencias.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 if(!response.isEmpty()) {
                     try {
                         JSONArray object= null;
 
                         object = new JSONArray(response);
-                        Log.i("result","Data: "+response);
+
                         for(int i=0;i<object.length();i++) {
                             JSONObject indicencia = object.getJSONObject(i);
 
@@ -105,10 +106,6 @@ public class frlnAdu extends Fragment {
                         list.setLayoutManager(new LinearLayoutManager(requireContext()));
                         RecyclerView.Adapter<myAdapter.ContenetViews> adapter= new myAdapter(itemRec);
                         list.setAdapter(adapter);
-
-
-
-
                     }
 
                     catch (JSONException e) {
@@ -116,13 +113,14 @@ public class frlnAdu extends Fragment {
                     }
 
                 }else{
-                    Toast.makeText(requireContext(), "Sin incidencias que mostrar", Toast.LENGTH_SHORT).show();
+
+                   Toast.makeText(requireContext(), "Sin incidencias que mostrar", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast.makeText(MainActivity.this,error.toString(), Toast.LENGTH_SHORT).show();
+                Log.i("result",error.toString());
 
             }
 

@@ -3,6 +3,7 @@ package com.example.siteapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,6 +34,7 @@ public class departamento_tecnico extends AppCompatActivity {
     private String incidencia = "tecnica";
     private ListView lv1;
     final String[] valor = {""};
+    String trampa;
 
     private String problemas[] = {"antena caida", "lentitud", "problemas / router_antena","cambio/clave"," sin navegacio","dano/cable","wifi_cambio_nombre/contrasena"};
 
@@ -43,7 +45,7 @@ public class departamento_tecnico extends AppCompatActivity {
         v3 = ActivityDepartamentoTecnicoBinding.inflate(getLayoutInflater());
         View view = v3.getRoot();
         setContentView(view);
-
+        trampa = getIntent().getStringExtra("trampa");
         lv1 = (ListView) findViewById(R.id.lv1);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, problemas);
         lv1.setAdapter(adapter);
@@ -60,7 +62,7 @@ public class departamento_tecnico extends AppCompatActivity {
         v3.btn4tec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registroTicketstecnicos( "http://192.168.101.4/conexion_php/insertar_incidencias.php"  );
+                registroTicketstecnicos( "http://192.168.101.5/conexion_php/insertar_incidencias.php"  );
 
 
             }
@@ -69,8 +71,23 @@ public class departamento_tecnico extends AppCompatActivity {
         v3.btn6tec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
-                startActivity(intent);
+                SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+                String tip_usuario=admin.getString("tip_usuario","");
+
+                if (tip_usuario.equals("C")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
+                    startActivity(intent);
+
+                }
+
+                else if (tip_usuario.equals("D")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
+                    startActivity(intent);
+
+
+                }
             }
         });
 

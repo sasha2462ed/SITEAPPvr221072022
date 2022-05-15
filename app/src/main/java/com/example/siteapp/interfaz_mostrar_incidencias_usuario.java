@@ -3,7 +3,6 @@ package com.example.siteapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -14,45 +13,25 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.siteapp.databinding.ActivityInterfazMostrarIncidenciasAdministrativasBinding;
-import com.example.siteapp.databinding.ActivityMainBinding;
-import com.example.siteapp.databinding.FragmentFrInTecBinding;
+import com.example.siteapp.databinding.ActivityInterfazMostrarIncidenciasUsuarioBinding;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+public class interfaz_mostrar_incidencias_usuario extends AppCompatActivity {
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-public class interfaz_mostrar_incidencias_nivel_tecnico extends AppCompatActivity {
-
-
-    ActivityInterfazMostrarIncidenciasAdministrativasBinding layout;
+    ActivityInterfazMostrarIncidenciasUsuarioBinding layout;
     RecyclerView lista;
 
     String trampa;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        layout=ActivityInterfazMostrarIncidenciasAdministrativasBinding.inflate(getLayoutInflater());
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
 
-        setContentView(layout.getRoot());
+            layout=ActivityInterfazMostrarIncidenciasUsuarioBinding.inflate(getLayoutInflater());
+
+            setContentView(layout.getRoot());
 //        SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
 //        String tipo=admin.getString("tipo","");
 //        Log.i("result","Data: "+tipo);
@@ -67,48 +46,48 @@ public class interfaz_mostrar_incidencias_nivel_tecnico extends AppCompatActivit
         lista.setAdapter(adapter);
 */
 
-    }
+        }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
 
-        MenuInflater inflador=getMenuInflater();
-        inflador.inflate(R.menu.incidencias_dependientes,menu);
-        return super.onCreateOptionsMenu(menu);
+            MenuInflater inflador=getMenuInflater();
+            inflador.inflate(R.menu.incidencias_dependientes,menu);
+            return super.onCreateOptionsMenu(menu);
 
-    }
+        }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        @Override
+        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        trampa = getIntent().getStringExtra("trampa");
+            trampa = getIntent().getStringExtra("trampa");
 
 
-        SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
-        String tip_usuario=admin.getString("tip_usuario","");
-        Log.i("result","Data: "+tip_usuario);
-        Log.i("result","dependiente: "+trampa);
+            SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+            String tip_usuario=admin.getString("tip_usuario","");
+            Log.i("result","Data: "+tip_usuario);
+            Log.i("result","dependiente: "+trampa);
 
             switch (item.getItemId())
             {
 
                 case R.id.admin:
 
-                    if(tip_usuario.equals("C")){
+                    if (tip_usuario.equals("D") && trampa.equals("0")){
 
                         frlnAdu fr3=new frlnAdu();
                         FragmentTransaction mFragmentAdmin = getSupportFragmentManager().beginTransaction();
-                        mFragmentAdmin.replace(layout.containerFrag.getId(),fr3);
+                        mFragmentAdmin.replace(layout.containerF.getId(),fr3);
                         mFragmentAdmin.commit();
 
 
                     }
 
-                    else{
+                    else if (tip_usuario.equals("D") && trampa.equals("2")){
 
                         frInAd fr2=new frInAd();
                         FragmentTransaction mFragmentAdmin = getSupportFragmentManager().beginTransaction();
-                        mFragmentAdmin.replace(layout.containerFrag.getId(),fr2);
+                        mFragmentAdmin.replace(layout.containerF.getId(),fr2);
                         mFragmentAdmin.commit();
 
 
@@ -117,21 +96,26 @@ public class interfaz_mostrar_incidencias_nivel_tecnico extends AppCompatActivit
                     break;
                 case R.id.tecnico:
 
-                    if(tip_usuario.equals("C")) {
+                   if (tip_usuario.equals("D") && trampa.equals("0")){
+
                         frlnTecu fr4 = new frlnTecu();
                         FragmentTransaction mFragmentTec = getSupportFragmentManager().beginTransaction();
-                        mFragmentTec.replace(layout.containerFrag.getId(), fr4);
+                        mFragmentTec.replace(layout.containerF.getId(),fr4);
                         mFragmentTec.commit();
+
+
                     }
 
-                    else{
+                    else if (tip_usuario.equals("D") && trampa.equals("2")){
+
                         frInTec fr1 = new frInTec();
                         FragmentTransaction mFragmentTec = getSupportFragmentManager().beginTransaction();
-                        mFragmentTec.replace(layout.containerFrag.getId(),fr1);
+                        mFragmentTec.replace(layout.containerF.getId(),fr1);
                         mFragmentTec.commit();
 
 
                     }
+
                     break;
 
 
@@ -162,7 +146,7 @@ public class interfaz_mostrar_incidencias_nivel_tecnico extends AppCompatActivit
 
             }
 
-        return super.onOptionsItemSelected(item);
-    }
+            return super.onOptionsItemSelected(item);
+        }
 
-}
+    }

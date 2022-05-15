@@ -9,6 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +35,7 @@
             <LinearLayout
                 android:id="@+id/linearlayoutlist"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
@@ -43,7 +44,7 @@
 
                 <EditText
                     android:id="@+id/txp7"
-                    android:layout_width="180dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="48dp"
                     android:layout_marginTop="8dp"
                     android:ems="10"
@@ -53,7 +54,7 @@
 
                 <Button
                     android:id="@+id/btn10"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="54dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="0dp"
@@ -113,7 +114,6 @@
                 android:layout_marginTop="30dp"
                 android:gravity="center|center_horizontal"
                 android:text="@string/btn9" />
-
 
 
             <Button

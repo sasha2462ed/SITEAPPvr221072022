@@ -3,6 +3,7 @@ package com.example.siteapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class departamento_administrativo extends AppCompatActivity {
-
+    String trampa;
     private ActivityDepartamentoAdministrativoBinding v4;
     RequestQueue requestQueue;
     DatePickerDialog.OnDateSetListener setListener1;
@@ -42,7 +43,7 @@ public class departamento_administrativo extends AppCompatActivity {
         v4 = ActivityDepartamentoAdministrativoBinding.inflate(getLayoutInflater());
         View view = v4.getRoot();
         setContentView(view);
-
+        trampa = getIntent().getStringExtra("trampa");
 
 
 
@@ -62,7 +63,7 @@ public class departamento_administrativo extends AppCompatActivity {
         v4.btn4adm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registroTicketsadministrativos( "http://192.168.101.4/conexion_php/insertar_incidencias.php"  );
+                registroTicketsadministrativos( "http://192.168.101.5/conexion_php/insertar_incidencias.php"  );
 
             }
         });
@@ -70,8 +71,23 @@ public class departamento_administrativo extends AppCompatActivity {
         v4.btn6adm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
-                startActivity(intent);
+                SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+                String tip_usuario=admin.getString("tip_usuario","");
+
+                if (tip_usuario.equals("C")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
+                    startActivity(intent);
+
+                }
+
+                else if (tip_usuario.equals("D")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
+                    startActivity(intent);
+
+
+                }
             }
         });
 

@@ -15,7 +15,6 @@
         android:text="@string/textsugerencia"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,12 +22,14 @@
         android:id="@+id/textosugerencia"
         android:layout_width="321dp"
         android:layout_height="98dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="84dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="@string/textosugerencia"
         android:inputType="textPersonName"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textsugerencia" />
 
@@ -50,4 +51,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botonsugerencia" />
+
+
+    <EditText
+        android:id="@+id/textosuge"
+        android:layout_width="320dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:hint="@string/textosuge"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textsugerencia" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

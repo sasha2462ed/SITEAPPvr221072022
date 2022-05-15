@@ -31,7 +31,7 @@ public class interfaz_usuario extends AppCompatActivity {
         setContentView(view);
 
 
-       // boolean invisible = true;
+        // boolean invisible = true;
 
 
         SharedPreferences admin=this.getSharedPreferences("x",MODE_PRIVATE);
@@ -39,26 +39,6 @@ public class interfaz_usuario extends AppCompatActivity {
         ct=view.getContext();
 
 
-        if (tip_usuario.equals("D")){
-
-            v2.imageView1.setVisibility(View.VISIBLE);
-
-
-        }
-
-        else{
-
-            v2.imageView1.setVisibility(View.INVISIBLE);
-
-        }
-
-        v2.imageView1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
-                startActivity(intent);
-            }
-        });
 
         v2.btn2.setOnClickListener(new View.OnClickListener() {
             @Override

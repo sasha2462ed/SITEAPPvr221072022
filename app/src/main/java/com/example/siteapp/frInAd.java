@@ -98,7 +98,7 @@ public class frInAd extends Fragment {
                 Log.i("result","Data: "+tip_usuario);
 
 
-                    URL="http://192.168.101.2/usuarios_bd/incidencias_usuario_tec1.1.php";
+                    URL="http://192.168.101.5/conexion_php/buscar_incidenciastec.php";
 
 
                 state_frag1 = spinner_estado_ad.getSelectedItem().toString();
@@ -153,6 +153,7 @@ public class frInAd extends Fragment {
 
                             }else{
                                 Toast.makeText(requireContext(), "Sin incidencias que mostrar", Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     }, new Response.ErrorListener(){

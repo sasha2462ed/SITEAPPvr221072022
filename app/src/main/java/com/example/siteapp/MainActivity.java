@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         v1.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validarUsuario( "http://192.168.101.4/conexion_php/validar_usuario.php"  );
+                validarUsuario( "http://192.168.101.5/conexion_php/validar_usuario.php"  );
 
                 //if ( validarUsuario("http://192.168.1.4/usuarios_bd/validar_usuario.php" )) {
                 //} else if (v1.txp1.equals("222") && v1.txp2.equals("444")); {

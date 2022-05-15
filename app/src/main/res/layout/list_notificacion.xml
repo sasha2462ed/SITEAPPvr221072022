@@ -26,7 +26,7 @@
 
             <ImageView
                 android:id="@+id/icono"
-                android:layout_width="64dp"
+                android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
@@ -35,8 +35,8 @@
                 android:layout_marginStart="2dp"
                 android:layout_marginLeft="9dp"
                 android:layout_marginTop="2dp"
-                android:paddingLeft="14dp"
-                android:paddingRight="14dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:src="@drawable/ic_report_problem_black_24dp" />
 
             <LinearLayout
@@ -52,7 +52,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tiponot"
+                    android:id="@+id/asunto"
                     android:layout_width="150dp"
                     android:layout_height="50dp"
                     android:layout_marginBottom="2dp"
@@ -64,7 +64,7 @@
                     tools:layout_editor_absoluteY="29dp" />
 
                 <TextView
-                    android:id="@+id/txtIdUser"
+                    android:id="@+id/estado"
                     android:layout_width="150dp"
                     android:layout_height="10dp"
                     android:text="Más"
@@ -74,30 +74,38 @@
 
             <TextView
                 android:id="@+id/fecha"
-                android:layout_width="125dp"
-                android:layout_height="37dp"
+                android:layout_width="123dp"
+                android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="18dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="11dp"
-                android:layout_marginEnd="26dp"
+                android:layout_marginEnd="56dp"
                 android:layout_marginBottom="10dp"
                 android:layout_toEndOf="@+id/linearlayoutlist"
                 android:gravity="center"
                 android:text="fecha"
                 android:textSize="14sp" />
 
+            <ImageView
+                android:id="@+id/notii"
+                android:layout_width="25dp"
+                android:layout_height="22dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="340dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="28dp"
+                android:layout_toEndOf="@+id/linearlayoutlist"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:src="@drawable/badge" />
+
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/comentario"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="comentario"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:visibility="visible" />
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -6,17 +6,12 @@
     <item
         android:id="@+id/cerrar"
         android:title="Cerrar sesion" />
+
     <item
-        android:id="@+id/botify"
-        android:icon="@mipmap/ic_launcher_asignament_noti"
+        android:id="@+id/notify"
+        android:icon="@drawable/ic_launcher_asignament_noti"
         android:title="Item"
-        app:showAsAction="always" />
-        <android:com.nex3z.notificationbadge.NotificationBadge
-        android:id="@+id/badge"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        app:nbMaxTextLength="2" />
-
-
+        app:showAsAction="always"
+        android:actionLayout="@layout/notificacion_badge"/>
 
 </menu>

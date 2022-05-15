@@ -101,7 +101,7 @@ public class frInTec<spinner> extends Fragment {
 
 
 
-                    URL="http://192.168.101.2/usuarios_bd/incidencias_usuario_tec1.1.php";
+                    URL="http://192.168.101.5/conexion_php/buscar_incidenciastec.php";
 
 
                 state_frag = spinner_estado.getSelectedItem().toString();
@@ -164,12 +164,12 @@ public class frInTec<spinner> extends Fragment {
 
                             }else{
                                 Toast.makeText(requireContext(), "Sin incidencias que mostrar", Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     }, new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            //Toast.makeText(MainActivity.this,error.toString(), Toast.LENGTH_SHORT).show();
 
                         }
 

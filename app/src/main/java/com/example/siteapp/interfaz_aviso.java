@@ -23,7 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.siteapp.databinding.ActivityGraficosBinding;
+import com.example.siteapp.databinding.ActivityInterfazAvisoBinding;
 import com.example.siteapp.databinding.ActivityInterfazNotificacionesBinding;
 import com.example.siteapp.databinding.ActivityMainBinding;
 
@@ -35,16 +35,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class interfaz_notificaciones extends AppCompatActivity {
+public class interfaz_aviso extends AppCompatActivity {
+    private ActivityInterfazAvisoBinding layout;
 
-    private ActivityInterfazNotificacionesBinding layout;
     Context ct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interfaz_notificaciones);
-        layout= ActivityInterfazNotificacionesBinding.inflate(getLayoutInflater());
+        setContentView(R.layout.activity_interfaz_aviso);
+        layout= ActivityInterfazAvisoBinding.inflate(getLayoutInflater());
         View view = layout.getRoot();
         setContentView(view);
 
@@ -54,7 +54,7 @@ public class interfaz_notificaciones extends AppCompatActivity {
 
         itemRec=new ArrayList();
 
-        String URL = "http://192.168.101.5/conexion_php/buscar_notificacion.php";
+        String URL = "http://192.168.101.5/conexion_php/buscar_sugerencia.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
             @Override
@@ -72,12 +72,12 @@ public class interfaz_notificaciones extends AppCompatActivity {
 
                             itemRec.add(new list_notificacion(
 
-                                    notificacion.getString("asunto").toString(),
-                                    notificacion.getString("fecha").toString(),
-                                    notificacion.getString("estado").toString(),
-                                    notificacion.getString("comentario").toString(),
-                                    notificacion.getString("idNoti").toString(),
-                                    notificacion.getString("origen").toString()
+                                            notificacion.getString("asunto").toString(),
+                                            notificacion.getString("fecha").toString(),
+                                            notificacion.getString("estado").toString(),
+                                            notificacion.getString("comentario").toString(),
+                                            notificacion.getString("idNoti").toString(),
+                                            notificacion.getString("origen").toString()
 
 
                                     )
@@ -95,7 +95,7 @@ public class interfaz_notificaciones extends AppCompatActivity {
 
                 }else{
 
-                    Toast.makeText(getApplicationContext(), "Sin nuevas notificaciones", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Sin nuevas sugerencias", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener(){
@@ -124,7 +124,7 @@ public class interfaz_notificaciones extends AppCompatActivity {
 
         itemRec1=new ArrayList();
 
-        URL = "http://192.168.101.5/conexion_php/buscar_notificacion1.php";
+        URL = "http://192.168.101.5/conexion_php/buscar_sugerencia1.php";
 
         stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -151,6 +151,7 @@ public class interfaz_notificaciones extends AppCompatActivity {
 
 
 
+
                                     )
                             );
                         }
@@ -164,7 +165,7 @@ public class interfaz_notificaciones extends AppCompatActivity {
 
                 } else {
 
-                    Toast.makeText(getApplicationContext(), "Sin notificaciones que mostrar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Sin sugerencias que mostrar", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -190,6 +191,7 @@ public class interfaz_notificaciones extends AppCompatActivity {
 
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -210,6 +212,7 @@ public class interfaz_notificaciones extends AppCompatActivity {
 
             case R.id.salir:
 
+
                 finishAffinity();
                 System.exit(0);
 
@@ -217,6 +220,7 @@ public class interfaz_notificaciones extends AppCompatActivity {
                 break;
 
             case R.id.regresar:
+
 
                 if(tip_usuario.equals("C")){
 

@@ -1,10 +1,12 @@
 package com.example.siteapp;
 
-import static android.view.View.INVISIBLE;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.MenuItemCompat;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,16 +16,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.siteapp.databinding.ActivityInterfazTecnicoBinding;
-import com.nex3z.notificationbadge.NotificationBadge;
+
 
 public class interfaz_tecnico extends AppCompatActivity {
 
     private ActivityInterfazTecnicoBinding v6;
 
     //NotificationBadge notificationBadge;
-   // int count=5;
+    // int count=5;
 
     //String numus;
     Context ct;
@@ -50,28 +53,6 @@ public class interfaz_tecnico extends AppCompatActivity {
         Log.i("result","Message: " +cedula);
         Log.i("result","Message: " +tip_usuario);
 
-        //boolean invisble= true;
-        if (tip_usuario.equals("D")){
-
-            v6.imageView2.setVisibility(View.VISIBLE);
-
-
-        }
-
-        else{
-
-            v6.imageView2.setVisibility(View.INVISIBLE);
-
-
-        }
-
-        v6.imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
-                startActivity(intent);
-            }
-        });
 
         v6.btn6.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +112,26 @@ public class interfaz_tecnico extends AppCompatActivity {
         inflador.inflate(R.menu.cerrar,menu);
         return super.onCreateOptionsMenu(menu);
 
+/*
+        menuItem = menu.findItem(R.id.notify);
+        if (count == 0) {
+            // if no pending notification remove badge
+            menuItem = menu.findItem(R.id.notify);
+            menuItem.setActionView(null);
+
+        } else {
+            menuItem = menu.findItem(R.id.notify);
+            // if notification than set the badge icon layout
+            menuItem.setActionView(R.layout.notificacion_badge);
+            // get the view from the nav item
+            View view = menuItem.getActionView();
+            // get the text view of the action view for the nav item
+            notification = view.findViewById(R.id.notification);
+            // set the pending notifications value
+            notification.setText(String.valueOf(count));
+
+        }
+*/
     }
 
     @Override

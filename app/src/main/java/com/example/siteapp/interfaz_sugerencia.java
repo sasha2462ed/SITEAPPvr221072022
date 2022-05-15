@@ -2,7 +2,9 @@ package com.example.siteapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +28,7 @@ public class interfaz_sugerencia extends AppCompatActivity {
 
     private ActivityInterfazSugerenciaBinding v9;
     RequestQueue requestQueue;
-
+    String trampa;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +37,12 @@ public class interfaz_sugerencia extends AppCompatActivity {
         View view = v9.getRoot();
         setContentView(view);
 
+        trampa = getIntent().getStringExtra("trampa");
+
         v9.botonsugerencia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registroSugerencias("http://192.168.101.2/usuarios_bd/insertar_sugerencia.php");
+                registroSugerencias("http://192.168.101.5/conexion_php/insertar_sugerencia.php");
 
             }
         });
@@ -46,9 +50,23 @@ public class interfaz_sugerencia extends AppCompatActivity {
         v9.botonregresarsugerencia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
-                startActivity(intent);
+                SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+                String tip_usuario=admin.getString("tip_usuario","");
 
+                if (tip_usuario.equals("C")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
+                    startActivity(intent);
+
+                }
+
+                else if (tip_usuario.equals("D")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
+                    startActivity(intent);
+
+
+                }
             }
         });
     }
@@ -83,7 +101,7 @@ public class interfaz_sugerencia extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parametros = new HashMap<String, String>();
                 //parametros.put("id".toString().toString());
-                parametros.put("sugerencia_cliente", v9.textosugerencia.getText().toString());
+                parametros.put("descripcion", v9.textosugerencia.getText().toString());
                 return parametros;
             }
         };

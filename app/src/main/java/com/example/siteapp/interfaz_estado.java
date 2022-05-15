@@ -1,5 +1,6 @@
 package com.example.siteapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.FragmentTransaction;
@@ -8,6 +9,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,8 +39,9 @@ public class interfaz_estado extends AppCompatActivity {
     String idCliente;
     String idIncidencia;
     String cedula;
-    String state;
     RequestQueue requestQueue;
+    Context ct;
+    final String[] valor = {""};
 
     private String problemas2 [] = {"Receptado", "En curso", " Finalizado"};
     @Override
@@ -63,17 +68,18 @@ public class interfaz_estado extends AppCompatActivity {
                 Log.i("result","IDIncidencia: "+idIncidencia);
                 Log.i("result","Estado: "+valor3);
                 Log.i("result","cedulaclient: "+cedula);
-
-                Toast.makeText(getApplicationContext(), "Estado de la incidencia " + valor3, Toast.LENGTH_SHORT).show();
+                valor[0] = problemas2[i];
+                //Toast.makeText(getApplicationContext(), valor[0], Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Estado de la incidencia " + valor[0], Toast.LENGTH_SHORT).show();
             }
         });
 
           v30.btnstate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                modificarestado( "http://192.168.101.2/usuarios_bd/modificar_estado.php"  );
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.commit();
+                modificarestado( "http://192.168.101.5/conexion_php/modificar_estado.php"  );
+                //FragmentTransaction ft = getFragmentManager().beginTransaction();
+                //ft.commit();
             }
         });
 
@@ -95,6 +101,9 @@ public class interfaz_estado extends AppCompatActivity {
                 } else {
                     Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
                 }
+
+                Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_nivel_tecnico.class);
+                startActivity(intent);
 
             }
 
@@ -124,6 +133,4 @@ public class interfaz_estado extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
-
 }
-

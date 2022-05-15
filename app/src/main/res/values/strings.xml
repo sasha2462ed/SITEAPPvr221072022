@@ -12,23 +12,35 @@
     <string name="btn2"> Departamento Administrativo </string>
     <string name="btn3"> Departamento Tecnico </string>
 
-    <string name="textsugerencia"> Bienvenido - Bandeja de Sugerencias Anonymus ^w^ </string>
+    <string name="textsugerencia"> Bienvenido - Buzon de Sugerencias Anonymus ^w^ </string>
     <string name="textosugerencia"> Sugerencia ^w^ </string>
-    <string name="sugerencias"> Bandeja de sugerencias </string>
+    <string name="sugerencias"> Buzon de sugerencias </string>
     <string name="botonsugerencia"> Enviar Sugerencia </string>
+    <string name="textosuge"> Asunto ? </string>
     <string name="botonmostrarusuario"> Mostrar Incidencias </string>
     <string name="botonregresarsugerencia"> Regresar </string>
 
-    <string name="textnotificacion"> Bienvenido Envio de Notificaciones Anonymus ^w^ </string>
+    <string name="textnotificacion"> Bienvenido Buzon de Notificaciones Anonymus ^w^ </string>
     <string name="textonotificacion"> Notificacion ^w^ </string>
+    <string name="textosunto"> Asunto ? </string>
     <string name="notificaciones"> Bandeja de sugerencias </string>
     <string name="botonnotificaciones"> Enviar Notificacion </string>
     <string name="botonregresarnotificacion"> Regresar </string>
+    <string name="botonenvionotificacion"> Buzon de notificacion </string>
+
 
     <string name="txv30"> Menu principal Anonymust ^w^  </string>
-    <string name="btn30"> Interfaz usuario </string>
-    <string name="btn40"> Interfaz tecnico </string>
+    <string name="btn30"> Departamento AD </string>
+    <string name="btn40"> Departamento TEC </string>
     <string name="btn22"> Salir </string>
+    <string name="txvin1"> Tecnico / Usuario </string>
+    <string name="btnin"> Mis incidencias </string>
+    <string name="btnin1"> Registrar usuarios </string>
+    <string name="btnin2"> Repertorio / incidencias </string>
+    <string name="btnin3"> Grafico / incidencias </string>
+    <string name="btnin4"> Buzon / Sugerencia  </string>
+    <string name="btnin5"> Buzon / Notificacion </string>
+
 
     <string name="txv4tec"> Anonymus: Seleccione su requerimiento ^w^  </string>
     <string name="txp4tec"> Comentario </string>
@@ -50,7 +62,7 @@
     <string name="btn6"> Registrar Usuario </string>
     <string name="btn7"> Mostrar Incidencias </string>
     <string name="btn8"> Ver Graficos Incidencias </string>
-    <string name="botonenvionotificacion"> Enviar notificacion </string>
+
 
     <string name="txp6"> Nombre Titular </string>
     <string name="txp7"> Cedula </string>
@@ -81,6 +93,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="frlb">Panel Grafico de Incidencias...</string>
     <string name="frBlank">Panel de Incidencias...</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

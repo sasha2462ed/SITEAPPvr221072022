@@ -2,7 +2,9 @@ package com.example.siteapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +30,7 @@ import java.util.Map;
 public class interfaz_tecnico_usuario extends AppCompatActivity {
 
     RequestQueue requestQueue;
-
+    String trampa;
     private ActivityInterfazTecnicoUsuarioBinding v5;
 
     @Override
@@ -38,34 +40,49 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
         v5 = ActivityInterfazTecnicoUsuarioBinding.inflate(getLayoutInflater());
         View view = v5.getRoot();
         setContentView(view);
-
+        trampa = getIntent().getStringExtra("trampa");
 
 
         v5.btn9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertarproducto("http://192.168.101.4/conexion_php/insertar_usuario.php");
+                insertarproducto("http://192.168.101.5/conexion_php/insertar_usuario.php");
             }
         });
         v5.btn10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buscarproducto("http://192.168.101.4/conexion_php/buscar_usuario.php?cedula="+ v5.txp7.getText()+"");
+                buscarproducto("http://192.168.101.5/conexion_php/buscar_usuario.php?cedula="+ v5.txp7.getText()+"");
             }
         });
 
         v5.btn11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertarproducto("http://192.168.101.4/conexion_php/modificar_usuario.php");
+                insertarproducto("http://192.168.101.5/conexion_php/modificar_usuario.php");
             }
         });
 
         v5.btn12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
-                startActivity(intent);
+                SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+                String tip_usuario=admin.getString("tip_usuario","");
+
+                if (tip_usuario.equals("T")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
+                    startActivity(intent);
+
+                }
+
+                else if (tip_usuario.equals("D")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
+                    startActivity(intent);
+
+
+                }
             }
         });
 

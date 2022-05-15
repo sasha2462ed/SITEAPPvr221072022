@@ -165,7 +165,7 @@
                         tools:ignore="HardcodedText,RtlHardcoded" />
 
                     <TextView
-                        android:id="@+id/txtIdUser"
+                        android:id="@+id/estado"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Más"

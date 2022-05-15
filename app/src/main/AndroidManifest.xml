@@ -15,12 +15,23 @@
         android:theme="@style/Theme.SITEAPP"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".interfaz_mostrar_incidencias_usuario"
+            android:exported="true" />
+        <activity
+            android:name=".interfaz_suge_detalle"
+            android:exported="true" />
+        <activity
+            android:name=".interfaz_noti_detalle"
+            android:exported="true" />
+        <activity
+            android:name=".interfaz_aviso"
+            android:exported="true" />
+        <activity
             android:name=".interfaz_notificaciones"
             android:exported="true" />
         <activity
             android:name=".graficos"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".interfaz_estado"
             android:exported="true" />
@@ -48,7 +59,6 @@
         <activity
             android:name=".interfaz_dependiente"
             android:exported="true" />
-
         <activity
             android:name=".interfaz_tecnico"
             android:exported="true" />

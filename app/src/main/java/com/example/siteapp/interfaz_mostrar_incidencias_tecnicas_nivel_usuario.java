@@ -1,5 +1,6 @@
 package com.example.siteapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -43,8 +47,10 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
     String idIncidencia;
     String cedula;
     String estado;
+    String trampa;
     String comentario;
     RequestQueue requestQueue;
+    Context ct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +62,27 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
 
         idCliente = getIntent().getStringExtra("idClient");
         idIncidencia = getIntent().getStringExtra("idIncidencia");
-
         estado = getIntent().getStringExtra("estado");
         comentario = getIntent().getStringExtra("comentario");
         cedula = getIntent().getStringExtra("cedula");
+        trampa = getIntent().getStringExtra("trampa");
+
+        SharedPreferences admin=this.getSharedPreferences("x",MODE_PRIVATE);
+        ct=view.getContext();
+
+        String tip_usuario=admin.getString("tip_usuario","");
+
+
+        if(tip_usuario.equals("T") || tip_usuario.equals("D")) {
+
+            v29.btnestado.setVisibility(View.VISIBLE);
+        }else{
+
+            v29.btnestado.setVisibility(View.INVISIBLE);
+        }
+
+
+
 
         v29.btnestado.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,14 +104,16 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
         Log.i("result","IDCLiente: "+idCliente);
         Log.i("result","IDCLiente: "+idIncidencia);
 
-        String URL="http://192.168.101.2/usuarios_bd/validar_usuario1.php";
+        String URL="http://192.168.101.5/conexion_php/detalle.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.i("result",response.toString());
+
                 if(!response.isEmpty()) {
                     try {
-                        JSONObject objUser= new JSONObject(response);
+                        JSONObject objUser= new JSONObject(response.toString());
                         Log.i("result","data:"+response.toString());
 
                         v29.tvm1.setText(objUser.getString("nombre"));
@@ -125,7 +150,8 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                     }
 
                 }else{
-                    Toast.makeText(getApplicationContext(), "Sin datos que mostrar", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Sin datos que mostrar", Toast.LENGTH_SHORT).show();
+                    //Log.i("result","Uhmmmm0955454244");
                 }
             }
         }, new Response.ErrorListener(){
@@ -139,7 +165,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
             @Override
             protected Map<String, String> getParams () throws AuthFailureError {
                 Map<String,String> parametros = new HashMap<String, String>();
-                parametros.put("id", idCliente);
+                parametros.put("id", idIncidencia);
                 //parametros.put("idIncidencia", idIncidencia);
 
                 return parametros;
@@ -151,5 +177,65 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
 
         /********************************/
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflador=getMenuInflater();
+        inflador.inflate(R.menu.regresar,menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+        String tip_usuario=admin.getString("tip_usuario","");
+
+        switch (item.getItemId())
+        {
+
+            case R.id.salir:
+
+
+                finishAffinity();
+                System.exit(0);
+
+
+                break;
+
+            case R.id.regresar:
+
+                if(tip_usuario.equals("C")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
+                    startActivity(intent);
+
+                }
+
+                else if (tip_usuario.equals("T")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
+                    startActivity(intent);
+
+
+                }
+                else {
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
+                    startActivity(intent);
+
+                }
+
+                break;
+
+
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

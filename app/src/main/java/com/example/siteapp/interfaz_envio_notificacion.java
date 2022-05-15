@@ -2,7 +2,9 @@ package com.example.siteapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,19 +27,20 @@ public class interfaz_envio_notificacion extends AppCompatActivity {
 
     private ActivityInterfazEnvioNotificacionBinding v10;
     RequestQueue requestQueue;
-
+    String trampa;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interfaz_sugerencia);
+        setContentView(R.layout.activity_interfaz_envio_notificacion);
         v10 = ActivityInterfazEnvioNotificacionBinding.inflate(getLayoutInflater());
         View view = v10.getRoot();
         setContentView(view);
+        trampa = getIntent().getStringExtra("trampa");
 
         v10.botonnotificaciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                registroNotificacion("http://192.168.101.2/usuarios_bd/insertar_notificacion.php");
+                registroNotificacion("http://192.168.101.5/conexion_php/insertar_notificacion.php");
 
             }
         });
@@ -45,9 +48,23 @@ public class interfaz_envio_notificacion extends AppCompatActivity {
         v10.botonregresarnotificacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
-                startActivity(intent);
+                SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+                String tip_usuario=admin.getString("tip_usuario","");
 
+                if (tip_usuario.equals("T")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
+                    startActivity(intent);
+
+                }
+
+                else if (tip_usuario.equals("D")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
+                    startActivity(intent);
+
+
+                }
             }
         });
     }
@@ -56,12 +73,12 @@ public class interfaz_envio_notificacion extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("oliver", response);
-                if (response.equals("1")) {
+                Log.i("oliver",response);
+                if(response.equals("1")){
                     Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
 
 
-                } else {
+                }else{
                     Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
 
 
@@ -83,7 +100,8 @@ public class interfaz_envio_notificacion extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> parametros = new HashMap<String, String>();
                 //parametros.put("id".toString().toString());
-                parametros.put("notificacion", v10.textonotificacion.getText().toString());
+                parametros.put("descripcion", v10.textonotificacion.getText().toString());
+                parametros.put("asunto", v10.textosunto.getText().toString());
                 return parametros;
             }
         };

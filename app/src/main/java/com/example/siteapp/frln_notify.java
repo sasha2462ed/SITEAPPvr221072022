@@ -1,3 +1,6 @@
+
+
+
 package com.example.siteapp;
 
 import android.content.Context;
@@ -21,8 +24,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
-import com.example.siteapp.databinding.FragmentFrlnTecuBinding;
+import com.example.siteapp.databinding.FragmentFrlnAduBinding;
+import com.example.siteapp.databinding.FragmentFrlnNotifyBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,60 +37,41 @@ import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link frlnTecu#newInstance} factory method to
+ * Use the {@link frln_notify#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class frlnTecu extends Fragment {
-    FragmentFrlnTecuBinding layout;
+public class frln_notify extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    FragmentFrlnNotifyBinding layout;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public frlnTecu() {
+    public frln_notify() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment frlnTecu.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static frlnTecu newInstance(String param1, String param2) {
-        frlnTecu fragment = new frlnTecu();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
+
+    public static frln_notify newInstance(String param1, String param2) {
+        frln_notify fragment = new frln_notify();
+
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        layout= FragmentFrlnTecuBinding.inflate(inflater,container,false);
+        // Inflate the layout for this fragment
+        layout= FragmentFrlnNotifyBinding.inflate(inflater,container,false);
         View v=layout.getRoot();
-
+/*
         RecyclerView list=layout.lista;
-        ArrayList<Incidencias> itemRec;
+        ArrayList<list_notificacion> itemRec;
 
         itemRec=new ArrayList();
 
@@ -96,6 +80,7 @@ public class frlnTecu extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+
                 if(!response.isEmpty()) {
                     try {
                         JSONArray object= null;
@@ -105,23 +90,23 @@ public class frlnTecu extends Fragment {
                         for(int i=0;i<object.length();i++) {
                             JSONObject indicencia = object.getJSONObject(i);
 
-                            itemRec.add(new Incidencias(
+                            itemRec.add(new list_notificacion(
                                             indicencia.getString("idIncidencias"),
-                                            indicencia.getString("tipo").toString(),
-                                            indicencia.getString("comentario").toString(),
-                                            indicencia.getString("hora").toString(),
-                                            indicencia.getString("estado").toString(),
-                                            indicencia.getString("id").toString(),
-                                            indicencia.getString("cedula").toString()
+                                            indicencia.getString("asunto").toString(),
+                                            indicencia.getString("descripcion").toString(),
+                                            indicencia.getString("fecha").toString(),
+                                            indicencia.getString("estado").toString()
+
+
+
 
                                     )
                             );
                         }
 
                         list.setLayoutManager(new LinearLayoutManager(requireContext()));
-                        RecyclerView.Adapter<myAdapter.ContenetViews> adapter= new myAdapter(itemRec);
+                        RecyclerView.Adapter<adapter_notify.adapter_notificacion> adapter= new adapter_notify(itemRec);
                         list.setAdapter(adapter);
-
                     }
 
                     catch (JSONException e) {
@@ -144,22 +129,14 @@ public class frlnTecu extends Fragment {
             @Override
             protected Map<String, String> getParams () throws AuthFailureError {
                 Map<String,String> parametros = new HashMap<String, String>();
-
-                parametros.put("departamento", String.valueOf(1));
-
-                SharedPreferences admin=requireContext().getSharedPreferences("x", Context.MODE_PRIVATE);
-                String id=admin.getString("id","");
-                parametros.put("id", id);
-
-
-
+                parametros.put("estado", "NV");
                 return parametros;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(stringRequest);
 
-
+*/
         return v;
 
     }
