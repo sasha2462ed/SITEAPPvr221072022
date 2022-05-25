@@ -137,7 +137,9 @@ public class departamento_tecnico extends AppCompatActivity {
                 parametros.put("comentario",v3.txp4tec.getText().toString());
                 SharedPreferences admin=getApplicationContext().getSharedPreferences("x",MODE_PRIVATE);
                 String id=admin.getString("id","");
+                String ap=admin.getString("ap","");
                 parametros.put("id_usuarios", id);
+                parametros.put("ap", ap);
                 return parametros;
             }
         };

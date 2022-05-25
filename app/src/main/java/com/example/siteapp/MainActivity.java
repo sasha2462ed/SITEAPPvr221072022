@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         data.putString("cedula",objUser.getString("cedula"));
                         data.putString("tip_usuario",objUser.getString("tip_usuario"));
                         data.putString("id",objUser.getString("id"));
+                        data.putString("ap",objUser.getString("ap"));
 
                         data.apply();
 

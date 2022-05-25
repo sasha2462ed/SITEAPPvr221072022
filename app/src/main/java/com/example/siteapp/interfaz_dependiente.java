@@ -1,11 +1,19 @@
 package com.example.siteapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -27,11 +35,15 @@ import com.nex3z.notificationbadge.NotificationBadge;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class interfaz_dependiente extends AppCompatActivity {
 
     com.nex3z.notificationbadge.NotificationBadge NotificationBadge;
     private ActivityInterfazDependienteBinding v7;
+    private static final String CHANNEL_ID = "canal";
+    private PendingIntent pendingIntent;
+
     Context ct;
     int tec ;
     int usu ;
@@ -42,26 +54,42 @@ public class interfaz_dependiente extends AppCompatActivity {
         v7 = ActivityInterfazDependienteBinding.inflate(getLayoutInflater());
         View view = v7.getRoot();
         setContentView(view);
+
+
         SharedPreferences admin=this.getSharedPreferences("x",MODE_PRIVATE);
         ct=view.getContext();
 
+
         v7.badget.setNumber(tec);
+        v7.badgeu.setNumber(usu);
+
+
+
+        if (String.valueOf(tec).isEmpty()) {
+        } else {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+                showNotification();
+                } else {
+                    showNewNotification();
+
+                }
+        }
 
         v7.icono15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),interfaz_aviso.class);
+                Intent intent = new Intent(getApplicationContext(),interfaz_notificaciones.class);
                 startActivity(intent);
 
             }
         });
 
-        v7.badgeu.setNumber(usu);
+
 
         v7.icono16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),interfaz_notificaciones.class);
+                Intent intent = new Intent(getApplicationContext(),interfaz_aviso.class);
                 startActivity(intent);
 
             }
@@ -134,7 +162,7 @@ public class interfaz_dependiente extends AppCompatActivity {
         v7.btnin3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), interfaz_mostrar_graficas.class);
+                Intent intent = new Intent(getApplicationContext(),interfaz_mostrar_graficas.class);
                 intent.putExtra("trampa", "2");
                 startActivity(intent);
 
@@ -150,6 +178,38 @@ public class interfaz_dependiente extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void showNewNotification() {
+        setPendingIntent(interfaz_notificaciones.class);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+        .setSmallIcon(R.drawable.ic_notification_add_black_24dp)
+                .setContentTitle("Usted tiene notificaciones pendientes")
+                .setContentText("")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
+        managerCompat.notify(1, builder.build());
+    }
+ private void setPendingIntent(Class<?> clsActivity){
+        Intent intent = new Intent(this, clsActivity);
+     TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+     stackBuilder.addParentStack(clsActivity);
+     stackBuilder.addNextIntent(intent);
+     pendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+
+ }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showNotification() {
+
+            NotificationChannel channel = new NotificationChannel (CHANNEL_ID, "NEW", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            manager.createNotificationChannel(channel);
 
     }
 
@@ -194,11 +254,12 @@ public class interfaz_dependiente extends AppCompatActivity {
 
                 SharedPreferences admin=ct.getSharedPreferences("x",ct.MODE_PRIVATE);
                 SharedPreferences.Editor data=admin.edit();
-
                 data.remove("estado");
                 data.remove("nombre");
                 data.remove("cedula");
                 data.remove("tip_usuario");
+                data.remove("id");
+                data.remove("ap");
                 data.apply();
 
                 Intent intent = new Intent( getApplicationContext(),MainActivity.class);

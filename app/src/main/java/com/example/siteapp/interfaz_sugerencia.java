@@ -71,11 +71,11 @@ public class interfaz_sugerencia extends AppCompatActivity {
         });
     }
     private void registroSugerencias (String URL){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.i("oliver", response);
-                if (response.equals("1")) {
+                Log.i("oliver",response);
+                if(response.equals("1")){
                     Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
 
 
@@ -85,23 +85,27 @@ public class interfaz_sugerencia extends AppCompatActivity {
 
                 }
 
-                Intent intent = new Intent(getApplicationContext(), interfaz_sugerencia.class);
+                Intent intent = new Intent( getApplicationContext(),interfaz_sugerencia.class);
                 startActivity(intent);
 
             }
 
-        }, new Response.ErrorListener() {
+        }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
             }
 
-        }) {
+        }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parametros = new HashMap<String, String>();
+            protected Map<String, String> getParams () throws AuthFailureError {
+                Map<String,String> parametros = new HashMap<String, String>();
                 //parametros.put("id".toString().toString());
-                parametros.put("descripcion", v9.textosugerencia.getText().toString());
+                parametros.put("asunto", v9.textosuge.getText().toString());
+                parametros.put("descripcion",v9.textosugerencia.getText().toString());
+                SharedPreferences admin=getApplicationContext().getSharedPreferences("x",MODE_PRIVATE);
+                String id=admin.getString("id","");
+                parametros.put("id_usuario", id);
                 return parametros;
             }
         };

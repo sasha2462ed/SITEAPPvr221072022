@@ -111,16 +111,26 @@ public class interfaz_usuario extends AppCompatActivity {
 
                 SharedPreferences admin=ct.getSharedPreferences("x",ct.MODE_PRIVATE);
                 SharedPreferences.Editor data=admin.edit();
-
                 data.remove("estado");
                 data.remove("nombre");
                 data.remove("cedula");
                 data.remove("tip_usuario");
+                data.remove("id");
+                data.remove("ap");
+                data.apply();
 
 
                 data.apply();
 
                 Intent intent = new Intent( getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+
+                break;
+
+            case R.id.notify:
+
+
+                intent = new Intent(getApplicationContext(), interfaz_notificaciones.class);
                 startActivity(intent);
 
                 break;

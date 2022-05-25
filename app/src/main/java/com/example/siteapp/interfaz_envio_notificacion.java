@@ -70,7 +70,7 @@ public class interfaz_envio_notificacion extends AppCompatActivity {
     }
 
     private void registroNotificacion (String URL){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.i("oliver",response);
@@ -84,24 +84,27 @@ public class interfaz_envio_notificacion extends AppCompatActivity {
 
                 }
 
-                Intent intent = new Intent(getApplicationContext(), interfaz_envio_notificacion.class);
+                Intent intent = new Intent( getApplicationContext(),interfaz_envio_notificacion.class);
                 startActivity(intent);
 
             }
 
-        }, new Response.ErrorListener() {
+        }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
             }
 
-        }) {
+        }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> parametros = new HashMap<String, String>();
+            protected Map<String, String> getParams () throws AuthFailureError {
+                Map<String,String> parametros = new HashMap<String, String>();
                 //parametros.put("id".toString().toString());
-                parametros.put("descripcion", v10.textonotificacion.getText().toString());
                 parametros.put("asunto", v10.textosunto.getText().toString());
+                parametros.put("descripcion",v10.textonotificacion.getText().toString());
+                SharedPreferences admin=getApplicationContext().getSharedPreferences("x",MODE_PRIVATE);
+                String id=admin.getString("id","");
+                parametros.put("id_tecnico", id);
                 return parametros;
             }
         };

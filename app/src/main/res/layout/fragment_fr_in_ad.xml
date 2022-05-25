@@ -11,12 +11,12 @@
         android:id="@+id/spinner_estado_ad"
         android:layout_width="220dp"
         android:layout_height="50dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.183"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck"/>
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lista"
@@ -37,7 +37,7 @@
         android:id="@+id/btn_frag_ad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:drawableLeft="@drawable/ic_baseline_search_24"
         android:text="BUSCAR"
         app:layout_constraintEnd_toEndOf="parent"

@@ -136,7 +136,9 @@ public class departamento_administrativo extends AppCompatActivity {
                 parametros.put("comentario",v4.txp4adm.getText().toString());
                 SharedPreferences admin=getApplicationContext().getSharedPreferences("x",MODE_PRIVATE);
                 String id=admin.getString("id","");
+                String ap=admin.getString("ap","");
                 parametros.put("id_usuarios", id);
+                parametros.put("ap", ap);
                 return parametros;
             }
         };

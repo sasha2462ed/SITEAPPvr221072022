@@ -14,11 +14,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.siteapp.databinding.ActivityGraficosBinding;
+import com.jjoe64.graphview.DefaultLabelFormatter;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,24 +61,57 @@ public class graficos extends AppCompatActivity {
                         barras = response.getJSONArray(1);
                         int[] y = new int[barras.length()];
 
-                        for(int c=0;c<barras.length();c++){
-                            y[c]= (int) barras.get(c);
+                        for (int c = 0; c < barras.length(); c++) {
+                            y[c] = (int) barras.get(c);
                         }
 
                         /**/
 
 
-                        DataPoint[] cordenadas= new DataPoint[barras.length()];
+                        DataPoint[] cordenadas = new DataPoint[barras.length()];
 
-                        for (int cont=0;cont<barras.length();cont++)
-                        {
-                            cordenadas[cont]=new DataPoint(cont,y[cont]);
+                        for (int cont = 0; cont < barras.length(); cont++) {
+                            cordenadas[cont] = new DataPoint(cont, y[cont]);
                         }
 
-                        BarGraphSeries<DataPoint> series=new BarGraphSeries<>(cordenadas);
-                        graph.getViewport().setScalable(true);
+                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(cordenadas);
+
+                        graph.getViewport().setXAxisBoundsManual(true);
+                        graph.getViewport().setMinX(0);
+                        graph.getViewport().setMaxX(barras.length());
+
                         graph.getViewport().setScrollable(true);
+                        graph.getViewport().setScrollableY(true);
+                        graph.getViewport().setScalable(false);
+                        graph.getViewport().setScalableY(true);
                         graph.addSeries(series);
+
+
+
+                        // use static labels for horizontal and vertical labels
+//                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+//                        staticLabelsFormatter.setHorizontalLabels(new String[barras.length()]);
+//                        staticLabelsFormatter.setVerticalLabels(new String[] {"low", "middle", "high"});
+//                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+
+                        // custom label formatter to show currency "EUR"
+
+
+                        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
+                            @Override
+                            public String formatLabel(double value, boolean isValueY) {
+                                if (isValueY) {
+                                    // show normal x values
+                                    return super.formatLabel(value, isValueY) + " €";
+
+                                } else {
+                                    // show currency for y values
+                                    return super.formatLabel(value, isValueY) ;
+                                }
+                            }
+                        });
+
+
 
 
                         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
@@ -85,8 +122,8 @@ public class graficos extends AppCompatActivity {
                             }
                         });
 
-                        series.setSpacing(50);
 
+                        series.setSpacing(50);
                         series.setDrawValuesOnTop(true);
                         series.setValuesOnTopColor(Color.CYAN);
 

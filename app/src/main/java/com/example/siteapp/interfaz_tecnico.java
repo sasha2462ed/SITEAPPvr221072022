@@ -26,10 +26,11 @@ public class interfaz_tecnico extends AppCompatActivity {
     private ActivityInterfazTecnicoBinding v6;
 
     //NotificationBadge notificationBadge;
-    // int count=5;
-
+    int count = 5;
+    MenuItem menuItem;
     //String numus;
     Context ct;
+    TextView notification;
     String trampa = "2";
 
     @Override
@@ -47,6 +48,7 @@ public class interfaz_tecnico extends AppCompatActivity {
         String nombre=admin.getString("nombre","");
         String cedula=admin.getString("cedula","");
         String tip_usuario=admin.getString("tip_usuario","");
+
 
 
         Log.i("result","Message: " +nombre);
@@ -75,7 +77,7 @@ public class interfaz_tecnico extends AppCompatActivity {
         v6.btn8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent( getApplicationContext(),graficos.class);
+                Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_graficas.class);
                 startActivity(intent);
 
 
@@ -110,9 +112,7 @@ public class interfaz_tecnico extends AppCompatActivity {
 
         MenuInflater inflador=getMenuInflater();
         inflador.inflate(R.menu.cerrar,menu);
-        return super.onCreateOptionsMenu(menu);
 
-/*
         menuItem = menu.findItem(R.id.notify);
         if (count == 0) {
             // if no pending notification remove badge
@@ -120,7 +120,7 @@ public class interfaz_tecnico extends AppCompatActivity {
             menuItem.setActionView(null);
 
         } else {
-            menuItem = menu.findItem(R.id.notify);
+
             // if notification than set the badge icon layout
             menuItem.setActionView(R.layout.notificacion_badge);
             // get the view from the nav item
@@ -129,9 +129,11 @@ public class interfaz_tecnico extends AppCompatActivity {
             notification = view.findViewById(R.id.notification);
             // set the pending notifications value
             notification.setText(String.valueOf(count));
+            menuItem = menu.findItem(R.id.notify);
+
 
         }
-*/
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -145,11 +147,12 @@ public class interfaz_tecnico extends AppCompatActivity {
 
                 SharedPreferences admin=ct.getSharedPreferences("x",ct.MODE_PRIVATE);
                 SharedPreferences.Editor data=admin.edit();
-
                 data.remove("estado");
                 data.remove("nombre");
                 data.remove("cedula");
                 data.remove("tip_usuario");
+                data.remove("id");
+                data.remove("ap");
                 data.apply();
 
                 Intent intent = new Intent( getApplicationContext(),MainActivity.class);
@@ -158,12 +161,17 @@ public class interfaz_tecnico extends AppCompatActivity {
                 break;
 
 
+            case R.id.notify:
+
+
+                intent = new Intent(getApplicationContext(), interfaz_aviso.class);
+                startActivity(intent);
+
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
 }

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.siteapp.databinding.ActivityInterfazMostrarGraficasBinding;
 import com.example.siteapp.databinding.ActivityInterfazMostrarIncidenciasAdministrativasBinding;
@@ -25,8 +26,8 @@ public class interfaz_mostrar_graficas extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interfaz_mostrar_graficas);
         layout=ActivityInterfazMostrarGraficasBinding.inflate(getLayoutInflater());
-
-        setContentView(layout.getRoot());
+        View view = layout.getRoot();
+        setContentView(view);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -40,41 +41,56 @@ public class interfaz_mostrar_graficas extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+        String tip_usuario=admin.getString("tip_usuario","");
+
         switch (item.getItemId())
         {
 
             case R.id.nod:
-                    frlnNod fr8=new frlnNod();
-                    FragmentTransaction mFragmentNodo = getSupportFragmentManager().beginTransaction();
-                    mFragmentNodo.replace(layout.FragmentC.getId(),fr8);
-                    mFragmentNodo.commit();
+
+                Intent intent = new Intent( getApplicationContext(),interfaz_graficoN.class);
+                startActivity(intent);
 
                 break;
 
 
             case R.id.ap:
 
-                frlnAp fr9=new frlnAp();
-                FragmentTransaction mFragmentApc = getSupportFragmentManager().beginTransaction();
-                mFragmentApc.replace(layout.FragmentC.getId(),fr9);
-                mFragmentApc.commit();
+                intent = new Intent(getApplicationContext(), graficos.class);
+                startActivity(intent);
 
                 break;
 
 
             case R.id.salir:
 
-                Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
-                startActivity(intent);
+                if(tip_usuario.equals("C")){
+
+                    intent = new Intent(getApplicationContext(), interfaz_usuario.class);
+                    startActivity(intent);
+
+                }
+
+                else if (tip_usuario.equals("T")) {
+
+                    intent = new Intent(getApplicationContext(), interfaz_tecnico.class);
+                    startActivity(intent);
+
+
+                } else {
+
+                    intent = new Intent(getApplicationContext(), interfaz_dependiente.class);
+                    startActivity(intent);
+
+
+                }
 
                 break;
+
 
         }
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 }
