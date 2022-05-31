@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -35,6 +37,7 @@ public class graficos extends AppCompatActivity {
 
     ActivityGraficosBinding layout;
     RequestQueue requestQueue;
+    private Spinner months;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +49,7 @@ public class graficos extends AppCompatActivity {
 
         GraphView graph=layout.myGraph;
 
-
-        String URL = "http://192.168.101.5/conexion_php/graficos.php";
+        String URL = "http://192.168.101.5/conexion_php/graficoso.php";
 
 
             JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
@@ -58,61 +60,72 @@ public class graficos extends AppCompatActivity {
 
                     try {
 
-                        barras = response.getJSONArray(1);
-                        int[] y = new int[barras.length()];
+                        months = layout.months;
+                        String [] mont = { "Enero","Febrero","Marzo","Abril","Mayo"};
+                        ArrayAdapter<String> adapter01 = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item_estado, mont);
+                        months.setAdapter(adapter01);
 
+                        barras = response.getJSONArray(1);
+
+                        int[] y = new int[barras.length()];
                         for (int c = 0; c < barras.length(); c++) {
                             y[c] = (int) barras.get(c);
                         }
 
-                        /**/
-
+                        ////*********////
+                        int mayor = y[0];
+                        for (int o = 0; o < y.length; o++) {
+                            if (mayor < y[o]) {
+                                mayor = y[o];
+                            }
+                        }
+                        Log.i("mayor", String.valueOf(barras.length()));
+                        /********************/
 
                         DataPoint[] cordenadas = new DataPoint[barras.length()];
 
                         for (int cont = 0; cont < barras.length(); cont++) {
                             cordenadas[cont] = new DataPoint(cont, y[cont]);
                         }
+                        graph.removeAllSeries();
 
                         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(cordenadas);
-
                         graph.getViewport().setXAxisBoundsManual(true);
                         graph.getViewport().setMinX(0);
-                        graph.getViewport().setMaxX(barras.length());
+                        graph.getViewport().setMaxX(barras.length()-1);
+
+                        graph.getViewport().setYAxisBoundsManual(true);
+                        graph.getViewport().setMinY(0);
+                        graph.getViewport().setMaxY(mayor);
 
                         graph.getViewport().setScrollable(true);
                         graph.getViewport().setScrollableY(true);
                         graph.getViewport().setScalable(false);
                         graph.getViewport().setScalableY(true);
+                        //graph.getLegendRenderer().setVisible(true);
                         graph.addSeries(series);
 
+                        //////******************////
+                        /// ESCALA ROJA DE LA IZQUIERDA
+                        BarGraphSeries<DataPoint> series3 = new BarGraphSeries<DataPoint>(cordenadas);
+                        graph.getSecondScale().addSeries(series3);
+                        graph.getSecondScale().setMinY(0);
+                        graph.getSecondScale().setMaxY(mayor);
+                        series3.setColor(Color.BLACK);
+                        graph.getGridLabelRenderer().setVerticalLabelsSecondScaleColor(Color.BLACK);
 
+                        ///// LINEAS ROJAS
+                        LineGraphSeries<DataPoint> series2 = new LineGraphSeries<>(cordenadas);
+                        graph.addSeries(series2);
 
+                        //*** titulos del para ejes x / Y
                         // use static labels for horizontal and vertical labels
-//                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-//                        staticLabelsFormatter.setHorizontalLabels(new String[barras.length()]);
-//                        staticLabelsFormatter.setVerticalLabels(new String[] {"low", "middle", "high"});
-//                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+                        StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
+                        staticLabelsFormatter.setHorizontalLabels(mont);
+                        //staticLabelsFormatter.setVerticalLabels(mes);
+                        graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
 
-                        // custom label formatter to show currency "EUR"
-
-
-                        graph.getGridLabelRenderer().setLabelFormatter(new DefaultLabelFormatter() {
-                            @Override
-                            public String formatLabel(double value, boolean isValueY) {
-                                if (isValueY) {
-                                    // show normal x values
-                                    return super.formatLabel(value, isValueY) + " €";
-
-                                } else {
-                                    // show currency for y values
-                                    return super.formatLabel(value, isValueY) ;
-                                }
-                            }
-                        });
-
-
-
+                        ////*******////////
 
                         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
                             @Override
@@ -122,17 +135,18 @@ public class graficos extends AppCompatActivity {
                             }
                         });
 
-
-                        series.setSpacing(50);
+                        //**** tamanio texto y color de las variables de las barras
+                        //series.setSpacing(50);
+                        series.setValuesOnTopSize(60);
                         series.setDrawValuesOnTop(true);
                         series.setValuesOnTopColor(Color.CYAN);
+                        /******/
 
                         /******/
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
 
             }, new Response.ErrorListener() {
@@ -144,8 +158,6 @@ public class graficos extends AppCompatActivity {
             });
             requestQueue= Volley.newRequestQueue(this);
             requestQueue.add(jsonArrayRequest);
-
-
 
 
     }

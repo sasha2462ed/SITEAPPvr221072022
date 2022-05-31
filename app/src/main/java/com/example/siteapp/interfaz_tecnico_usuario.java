@@ -46,7 +46,44 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
         v5.btn9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertarproducto("http://192.168.101.5/conexion_php/insertar_usuario.php");
+
+                if (v5.txp6.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Campo nombre vacio",Toast.LENGTH_SHORT).show();
+                } else {
+                    if (v5.txp7.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Campo cedula vacio",Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        if (v5.txp8.getText().toString().isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Campo contrasena vacio", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else {
+                            if (v5.txp9.getText().toString().isEmpty()) {
+                                Toast.makeText(getApplicationContext(), "Campo telefono vacio", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else {
+                                if (v5.txp10.getText().toString().isEmpty()) {
+                                    Toast.makeText(getApplicationContext(), "Campo direccion vacio", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else {
+                                    if (v5.txp12.getText().toString().isEmpty()) {
+                                        Toast.makeText(getApplicationContext(), "Campo ap vacio", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else {
+
+
+                                        insertarproducto("http://192.168.101.5/conexion_php/insertar_usuario.php");
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
         v5.btn10.setOnClickListener(new View.OnClickListener() {
@@ -144,27 +181,55 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                JSONObject jsonObject = null;
-                for (int i = 0; i < response.length(); i++) {
+
+
+
+                if (response != null) {
                     try {
-                        jsonObject = response.getJSONObject(i);
-                        v5.txp6.setText(jsonObject.getString("nombre"));
-                        v5.txp7.setText(jsonObject.getString("cedula"));
-                        v5.txp8.setText(jsonObject.getString("contrasena"));
-                        v5.txp9.setText(jsonObject.getString("telefono"));
-                        v5.txp10.setText(jsonObject.getString("direccion"));
-                        v5.txp12.setText(jsonObject.getString("ap"));
+
+
+                        JSONObject jsonObject = null;
+                        for (int i = 0; i < response.length(); i++) {
+                            jsonObject = response.getJSONObject(i);
+                            v5.txp6.setText(jsonObject.getString("nombre"));
+                            v5.txp7.setText(jsonObject.getString("cedula"));
+                            v5.txp8.setText(jsonObject.getString("contrasena"));
+                            v5.txp9.setText(jsonObject.getString("telefono"));
+                            v5.txp10.setText(jsonObject.getString("direccion"));
+                            v5.txp12.setText(jsonObject.getString("ap"));
+                        }
                     } catch (JSONException e) {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Sin incidencias que mostrar", Toast.LENGTH_SHORT).show();
                     }
+
+
+                } else {
+
+                    Toast.makeText(getApplicationContext(), "Usuario no registrado",Toast.LENGTH_SHORT).show();
+                    v5.txp6.getText().clear();
+                    v5.txp7.getText().clear();
+                    v5.txp8.getText().clear();
+                    v5.txp9.getText().clear();
+                    v5.txp10.getText().clear();
+                    v5.txp12.getText().clear();
+
 
                 }
             }
 
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Error de conexion",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Error de conexion",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Usuario no registrado",Toast.LENGTH_SHORT).show();
+                v5.txp6.getText().clear();
+                v5.txp7.getText().clear();
+                v5.txp8.getText().clear();
+                v5.txp9.getText().clear();
+                v5.txp10.getText().clear();
+                v5.txp12.getText().clear();
 
             }
         });

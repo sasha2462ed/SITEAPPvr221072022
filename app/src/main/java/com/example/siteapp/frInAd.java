@@ -143,6 +143,7 @@ public class frInAd extends Fragment {
 
                                     list.setLayoutManager(new LinearLayoutManager(requireContext()));
                                     RecyclerView.Adapter adapter= new myAdapter(itemRec);
+                                    adapter.notifyDataSetChanged();
                                     list.setAdapter(adapter);
 
                                 }

@@ -43,25 +43,7 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ContenetViews> {
         holder.tipo.setText(items.get(position).tipo);
         holder.comentario.setText(items.get(position).comentario);
         holder.fecha.setText(items.get(position).hora);
-        //holder.estado.setText(items.get(position).estado);
-
-        switch (items.get(position).estado) {
-            case "0":
-                items.get(position).estado = "Receptado";
-                holder.estado.setText(items.get(position).estado);
-
-                break;
-            case "1":
-                items.get(position).estado = "En curso";
-                holder.estado.setText(items.get(position).estado);
-
-                break;
-            case "2":
-                items.get(position).estado = "Finalizado";
-                holder.estado.setText(items.get(position).estado);
-
-                break;
-        }
+        holder.estado.setText(items.get(position).estado);
         holder.idClient.setText(items.get(position).idUser);
         /***/
         /***/

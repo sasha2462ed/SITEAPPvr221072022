@@ -59,7 +59,18 @@ public class MainActivity extends AppCompatActivity {
         v1.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validarUsuario( "http://192.168.101.5/conexion_php/validar_usuario.php"  );
+
+                if (v1.txp1.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Campo nombre vacio", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (v1.txp2.getText().toString().isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Campo cedula vacio", Toast.LENGTH_SHORT).show();
+                    } else {
+                        validarUsuario("http://192.168.101.5/conexion_php/validar_usuario.php");
+                    }
+                }
+
+            }
 
                 //if ( validarUsuario("http://192.168.1.4/usuarios_bd/validar_usuario.php" )) {
                 //} else if (v1.txp1.equals("222") && v1.txp2.equals("444")); {
@@ -70,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity(intent);
                 //}
 
-            }
+
         });
     }
 
@@ -158,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 return parametros;
             }
         };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
         //return false;
     }
