@@ -5,7 +5,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,6 +36,10 @@ import com.example.siteapp.databinding.ActivityInterfazDependienteBinding;
 import com.example.siteapp.databinding.NotificacionBadgeBinding;
 import com.nex3z.notificationbadge.NotificationBadge;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -41,7 +48,8 @@ public class interfaz_dependiente extends AppCompatActivity {
 
     com.nex3z.notificationbadge.NotificationBadge NotificationBadge;
     private ActivityInterfazDependienteBinding v7;
-    private static final String CHANNEL_ID = "canal";
+    private static final String CHANNEL_ID = "CHANNEL_ID";
+    private static final String CHANNEL_NAME = "CHANNEL_NAME";
     private PendingIntent pendingIntent;
 
     Context ct;
@@ -59,21 +67,93 @@ public class interfaz_dependiente extends AppCompatActivity {
         SharedPreferences admin=this.getSharedPreferences("x",MODE_PRIVATE);
         ct=view.getContext();
 
+        ///******/////////////////
+        String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(String response) {
+                if(!response.isEmpty()) {
+                    try {
+                        JSONArray object= null;
 
-        v7.badget.setNumber(tec);
-        v7.badgeu.setNumber(usu);
+                        object = new JSONArray(response);
+                        Log.i("result","Data: "+response);
+
+                        for(int i=0;i<object.length();i++) {
+                            JSONObject indicencia = object.getJSONObject(0);
+                            indicencia.getString("CI");
+                            int itemn = Integer.parseInt(indicencia.getString("CI").toString());
+                            Log.i("resultm", String.valueOf(itemn));
+
+                            JSONObject indicencia1 = object.getJSONObject(1);
+                            indicencia1.getString("CII");
+                            int items = Integer.parseInt(indicencia1.getString("CII").toString());
+                            Log.i("results", String.valueOf(items));
+
+
+                            v7.badget.setNumber(Integer.parseInt(String.valueOf(items)));
+                            v7.badgeu.setNumber(Integer.parseInt(String.valueOf(itemn)));
+
+                            if (Objects.equals(String.valueOf(itemn), "0") && Objects.equals(String.valueOf(items),"0")) {
+                                deleteNotificationChannel();
+                                //onDestroy();
 
 
 
-        if (String.valueOf(tec).isEmpty()) {
-        } else {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
-                showNotification();
-                } else {
-                    showNewNotification();
+                            } else {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                    showNotification();
+                                } else {
+                                    showNewNotification();
+                                }
+                            }
+
+
+                        }
+
+
+                    }
+
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }else{
 
                 }
-        }
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams () throws AuthFailureError {
+                Map<String,String> parametros = new HashMap<String, String>();
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
+
+
+
+
+
+
+
+
+
+        /////*****//////
+
+
+
+
+
 
         v7.icono15.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,37 +261,95 @@ public class interfaz_dependiente extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showNotification() {
+
+        NotificationChannel CHANNEL = new NotificationChannel (CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(CHANNEL);
+        showNewNotification();
+
+    }
+
     private void showNewNotification() {
-        setPendingIntent(interfaz_notificaciones.class);
+
+        setPendingIntent(interfaz_dependiente.class);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
         .setSmallIcon(R.drawable.ic_notification_add_black_24dp)
                 .setContentTitle("Usted tiene notificaciones pendientes")
                 .setContentText("")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setContentIntent(pendingIntent);
+        builder.setAutoCancel(true);
+        builder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
-        managerCompat.notify(1, builder.build());
+        managerCompat.notify( 1, builder.build());
+
+ //       managerCompat.deleteNotificationChannel("CHANNEL_ID");
+        //NotificationManager managerCompat = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
+ //       managerCompat.cancelAll();
+
     }
+
+//    @Override
+//    protected  void onDestroy() {
+//
+//        NotificationManager notificationManager = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
+//        notificationManager.cancelAll();
+//
+//        super.onDestroy();
+//    }
+
  private void setPendingIntent(Class<?> clsActivity){
+
         Intent intent = new Intent(this, clsActivity);
      TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
      stackBuilder.addParentStack(clsActivity);
      stackBuilder.addNextIntent(intent);
      pendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
-
-
+//     NotificationManager managerCompat = null;
+//     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+//         managerCompat = getApplicationContext().getSystemService(NotificationManager.class);
+//     }
+//     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//         managerCompat.deleteNotificationChannel("CHANNEL_ID");
+//     }
+//     NotificationManager manager = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
+//     manager.cancelAll();
+//     managerCompat = ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
+//     managerCompat.cancelAll();
 
  }
+///*******//////
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void showNotification() {
 
-            NotificationChannel channel = new NotificationChannel (CHANNEL_ID, "NEW", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            manager.createNotificationChannel(channel);
+
+
+
+
+
+
+ /////******/////
+
+    public void deleteNotificationChannel(){
+
+    NotificationManager notificationManager =
+            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    // The id of the channel.
+    String id = "CHANNEL_ID";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.deleteNotificationChannel(id);
+        } else {
+            NotificationManager manager = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
+            manager.cancelAll();
+
+        }
 
     }
+
+
+
 
 
     @Override

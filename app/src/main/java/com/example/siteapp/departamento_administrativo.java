@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,9 +20,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.siteapp.databinding.ActivityDepartamentoAdministrativoBinding;
+import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,11 +40,10 @@ public class departamento_administrativo extends AppCompatActivity {
     private ActivityDepartamentoAdministrativoBinding v4;
     RequestQueue requestQueue;
     DatePickerDialog.OnDateSetListener setListener1;
-    final String[] valor1 = {""};
+
     private ListView lv2;
+    Context ct;
 
-
-    private String problemas1 [] = {"Suspension/servicio", "Cancelacion/servicio", " Nuevo contrato"," Cambio de plan","Retiro / equipos"};
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,29 +52,165 @@ public class departamento_administrativo extends AppCompatActivity {
         View view = v4.getRoot();
         setContentView(view);
         trampa = getIntent().getStringExtra("trampa");
+///***********************************************************////
 
+        ct=view.getContext();
+        String URL="http://192.168.101.5/conexion_php/listadm.php";
 
-
-
-        lv2 = (ListView) findViewById(R.id.lv2);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, problemas1);
-        lv2.setAdapter(adapter1);
-
-        v4.lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                valor1[0] = problemas1[i];
-                Toast.makeText(getApplicationContext(), "Su incidencia es " + valor1[0], Toast.LENGTH_SHORT).show();
+            public void onResponse(String response) {
+
+                try {
+                    JSONArray nodos = new JSONArray(response);
+
+                    JSONArray id = new JSONArray(nodos.get(0).toString());
+                    JSONArray name = new JSONArray(nodos.get(1).toString());
+
+                    lv2 = (ListView) findViewById(R.id.lv2);
+                    String[] problemas1 = new String[name.length()];
+
+                    JSONObject nods = new JSONObject();
+
+
+                    for (int i = 0; i < name.length(); i++) {
+                        problemas1[i] = name.get(i).toString();
+                        nods.put(name.get(i).toString(), id.get(i).toString());
+                    }
+
+
+                    ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_items, problemas1);
+                    lv2.setAdapter(adapter1);
+
+
+
+                    lv2.setOnItemClickListener (new AdapterView.OnItemClickListener() {
+
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            //valor=lv2.getItemAtPosition(position).toString();
+                            final String[] valor1 = {""};
+                            valor1[0] = problemas1[position];
+                            Toast.makeText(getApplicationContext(),"Su incidencia es " + valor1[0], Toast.LENGTH_SHORT).show();
+
+
+                            Log.i("resultap",valor1[0]);
+
+                            //////////*////////////////
+
+                            try{
+
+                                v4.btn4adm.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        String URL= "http://192.168.101.5/conexion_php/insertar_incidencias.php";
+
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                Log.i("oliver",response);
+                                                if(response.equals("1")){
+                                                    Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
+
+
+                                                }else{
+                                                    Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
+
+
+                                                }
+
+                                                Intent intent = new Intent( getApplicationContext(),departamento_administrativo.class);
+                                                startActivity(intent);
+
+                                            }
+
+                                        }, new Response.ErrorListener(){
+                                            @Override
+                                            public void onErrorResponse(VolleyError error) {
+                                                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
+                                            }
+
+                                        }){
+                                            @Override
+                                            protected Map<String, String> getParams () throws AuthFailureError {
+                                                Map<String,String> parametros = new HashMap<String, String>();
+                                                //parametros.put("id".toString().toString());
+                                                parametros.put("tipo",valor1[0].toString());
+                                                Log.i("olivertipo",valor1[0]);
+                                                parametros.put("departamento", String.valueOf(2));
+                                                parametros.put("comentario",v4.txp4adm.getText().toString());
+                                                SharedPreferences admin=ct.getSharedPreferences("x",MODE_PRIVATE);
+                                                String id=admin.getString("id","");
+                                                String ap=admin.getString("ap","");
+                                                parametros.put("id_usuarios", id);
+                                                Log.i("oliverid",id);
+                                                parametros.put("ap", ap);
+                                                Log.i("oliverap",ap);
+                                                return parametros;
+                                            }
+                                        };
+                                        requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                        requestQueue.add(stringRequest);
+
+
+                                    }
+                                });
+
+
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+
+
+                            ///********************//
+
+                        }
+
+                    });
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
-        });
-        v4.btn4adm.setOnClickListener(new View.OnClickListener() {
+        }, new Response.ErrorListener(){
             @Override
-            public void onClick(View v) {
-                registroTicketsadministrativos( "http://192.168.101.5/conexion_php/insertar_incidencias.php"  );
+            public void onErrorResponse(VolleyError error) {
 
             }
-        });
+
+        }){
+            @Override
+            protected Map<String, String> getParams () throws AuthFailureError {
+                Map<String,String> parametros = new HashMap<String, String>();
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+
+/////*******************************************************//////
+
+
+
+
+
+//        v4.lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
+//                valor1[0 = problemas1[i];
+//                Toast.makeText(getApplicationContext(), "Su incidencia es " + valor1[0], Toast.LENGTH_SHORT).show();
+//
+//           }
+//        });
+
 
         v4.btn6adm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,51 +243,10 @@ public class departamento_administrativo extends AppCompatActivity {
             }
         });
 
+
+
+
     }
-    private void registroTicketsadministrativos (String URL){
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.i("oliver",response);
-                if(response.equals("1")){
-                    Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
 
-
-                }else{
-                    Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
-
-
-                }
-
-                Intent intent = new Intent( getApplicationContext(),departamento_administrativo.class);
-                startActivity(intent);
-
-            }
-
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-        }){
-            @Override
-            protected Map<String, String> getParams () throws AuthFailureError {
-                Map<String,String> parametros = new HashMap<String, String>();
-                //parametros.put("id".toString().toString());
-                parametros.put("tipo",valor1[0].toString());
-                parametros.put("departamento", String.valueOf(2));
-                parametros.put("comentario",v4.txp4adm.getText().toString());
-                SharedPreferences admin=getApplicationContext().getSharedPreferences("x",MODE_PRIVATE);
-                String id=admin.getString("id","");
-                String ap=admin.getString("ap","");
-                parametros.put("id_usuarios", id);
-                parametros.put("ap", ap);
-                return parametros;
-            }
-        };
-        requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-    }
 
 }

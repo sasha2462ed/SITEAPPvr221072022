@@ -2,6 +2,7 @@ package com.example.siteapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,7 +66,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
         estado = getIntent().getStringExtra("estado");
         comentario = getIntent().getStringExtra("comentario");
         cedula = getIntent().getStringExtra("cedula");
-        trampa = getIntent().getStringExtra("trampa");
+        //trampa = getIntent().getStringExtra("trampa");
 
         SharedPreferences admin=this.getSharedPreferences("x",MODE_PRIVATE);
         ct=view.getContext();
@@ -103,6 +104,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
 
         Log.i("result","IDCLiente: "+idCliente);
         Log.i("result","IDCLiente: "+idIncidencia);
+       // Log.i("resultverid", trampa);
 
         String URL="http://192.168.101.5/conexion_php/detalle.php";
 
@@ -124,7 +126,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                         v29.tvm6.setText(objUser.getString("nodo"));
                         v29.tvm7.setText(objUser.getString("ap"));
                         v29.tvm9.setText(comentario);
-                        v29.tvm8.setText(estado);
+                        v29.tvm8.setText(objUser.getString("estado"));
 
                        /* if ( estado.equals("0")){
                             estado = "Receptado";
@@ -211,30 +213,29 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
 
                 if(tip_usuario.equals("C")){
 
-                    Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
+                    Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_usuario.class);
                     startActivity(intent);
 
                 }
 
                 else if (tip_usuario.equals("T")){
 
-                    Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
+                    Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_nivel_tecnico.class);
                     startActivity(intent);
 
 
-                }
-                else {
+                }else {
 
-                    Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
+                    Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_nivel_tecnico.class);
                     startActivity(intent);
-
                 }
+
 
                 break;
 
 
 
-        }
+            }
 
         return super.onOptionsItemSelected(item);
     }

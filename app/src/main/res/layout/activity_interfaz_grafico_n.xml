@@ -11,6 +11,7 @@
         android:layout_width="220dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.79"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,14 +21,14 @@
 
     <Button
         android:id="@+id/btngrf"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="141dp"
-        android:layout_marginTop="132dp"
-        android:layout_marginEnd="176dp"
+        android:layout_width="124dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="124dp"
         android:text="VISUALIZAR"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.094"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,20 +36,31 @@
         android:id="@+id/spinnergrfap"
         android:layout_width="220dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.79"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnergrfN"
         tools:ignore="SpeakableTextPresentCheck" />
 
+    <Spinner
+        android:id="@+id/meses"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/btngrf"
+        app:layout_constraintTop_toBottomOf="@+id/spinnergrfap"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <TextView
         android:id="@+id/txtN"
         android:layout_width="100dp"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="10dp"
         android:gravity="center"
         android:text="NODO"
         android:textSize="16sp"
@@ -61,10 +73,8 @@
     <TextView
         android:id="@+id/txtap"
         android:layout_width="100dp"
-        android:layout_height="48dp"
+        android:layout_height="50dp"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="10dp"
         android:gravity="center"
         android:text="AP"
         android:textSize="16sp"
@@ -73,5 +83,26 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtN" />
+
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="378dp"
+        android:layout_height="378dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btngrf">
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/myGraph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </com.jjoe64.graphview.GraphView>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -105,6 +105,7 @@ public class frlnAdu extends Fragment {
 
                         list.setLayoutManager(new LinearLayoutManager(requireContext()));
                         RecyclerView.Adapter<myAdapter.ContenetViews> adapter= new myAdapter(itemRec);
+                        adapter.notifyDataSetChanged();
                         list.setAdapter(adapter);
                     }
 
