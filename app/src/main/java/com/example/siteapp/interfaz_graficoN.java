@@ -183,10 +183,7 @@ public class interfaz_graficoN extends AppCompatActivity {
                                                                     Log.i("result", response.toString());
                                                                     JSONArray barras = null;
                                                                     JSONArray strss = null;
-
-
                                                                     try {
-
                                                                         /*
                                                                         JSONArray name = response.getJSONArray(2);
                                                                         JSONArray id = response.getJSONArray(0);
