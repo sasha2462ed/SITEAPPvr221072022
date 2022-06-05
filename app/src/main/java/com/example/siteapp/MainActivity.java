@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,7 +29,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends General {
 
     private ActivityMainBinding v1;
     Context ct;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
 
         ct=view.getContext();
+
 
         SharedPreferences admin=getApplicationContext().getSharedPreferences("x",MODE_PRIVATE);
         boolean login=admin.getBoolean("estado",false);
@@ -84,6 +86,32 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+
+    /*
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            //Acción
+        }
+        return false;
+    }
+
+     */
+
+///////////////***********/
+
+
+
+//    @Override
+//    public void onBackPressed() {
+//        Log.i("result","Para Atraz");
+//    }
+
+
+
+
+///*******************/
+
 
     private void validarUsuario(String URL){
 
@@ -195,6 +223,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop(){
         super.onStop();
+
+
+
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("result","cerranod");
+
 
     }
 

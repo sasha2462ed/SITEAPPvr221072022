@@ -52,6 +52,7 @@ public class interfaz_graficoN extends AppCompatActivity {
     int go;
     private Spinner meses;
     private ListView lv50;
+    int mesIndice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +63,25 @@ public class interfaz_graficoN extends AppCompatActivity {
         setContentView(view);
 
         GraphView graph=layout.myGraph;
+
+        meses = layout.meses;
+        String [] mes ={ "Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"};
+        ArrayAdapter<String> adapter10 = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item_estado, mes);
+        meses.setAdapter(adapter10);
+
+        meses.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mesIndice = Integer.parseInt(String.valueOf(position+1));
+                Log.i("result5", String.valueOf(mesIndice));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         /****NODOS/
         /****************************************/
@@ -148,18 +168,13 @@ public class interfaz_graficoN extends AppCompatActivity {
                                                     go = Integer.parseInt(String.valueOf(apss.getString(stateap)));
                                                     Log.i("result5", String.valueOf(go));
 
-                                                    meses = layout.meses;
-                                                    String [] mes = { "Enero","Febrero","Marzo"};
-                                                    ArrayAdapter<String> adapter10 = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item_estado, mes);
-                                                    meses.setAdapter(adapter10);
-
                                                     //////////*////////////////
 
                                                     layout.btngrf.setOnClickListener(new View.OnClickListener() {
                                                         @Override
                                                         public void onClick(View v) {
 
-                                                            String URL= "http://192.168.101.5/conexion_php/graficosand.php?id_ap=" + go + "";
+                                                            String URL= "http://192.168.101.5/conexion_php/graficosand.php?id_ap=" + go;
 
 
                                                             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
@@ -167,6 +182,8 @@ public class interfaz_graficoN extends AppCompatActivity {
                                                                 public void onResponse(JSONArray response) {
                                                                     Log.i("result", response.toString());
                                                                     JSONArray barras = null;
+                                                                    JSONArray strss = null;
+
 
                                                                     try {
 
@@ -240,10 +257,17 @@ public class interfaz_graficoN extends AppCompatActivity {
                                                                         //*** titulos del para ejes x / Y
                                                                         // use static labels for horizontal and vertical labels
                                                                         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
-                                                                        staticLabelsFormatter.setHorizontalLabels(mes);
+
+                                                                        String xy=strss.toString().replace(","," ");
+                                                                        xy=xy.replace("[","");
+                                                                        xy=xy.replace("]","");
+                                                                        xy=xy.replace("\"","");
+                                                                        String[] z=xy.split(" ");
+
+                                                                        Log.i("result","str: "+z.toString());
+                                                                        staticLabelsFormatter.setHorizontalLabels(z);
                                                                         //staticLabelsFormatter.setVerticalLabels(mes);
                                                                         graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-
                                                                         ////*******////////
 
                                                                         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {

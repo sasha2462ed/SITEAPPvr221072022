@@ -25,7 +25,7 @@
             <EditText
                 android:id="@+id/txp6"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="50dp"
                 android:ems="10"
                 android:gravity="center"
@@ -45,7 +45,7 @@
                 <EditText
                     android:id="@+id/txp7"
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="50dp"
                     android:layout_marginTop="8dp"
                     android:ems="10"
                     android:gravity="center"
@@ -67,7 +67,7 @@
             <EditText
                 android:id="@+id/txp8"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
                 android:gravity="center"
@@ -77,7 +77,7 @@
             <EditText
                 android:id="@+id/txp9"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
                 android:gravity="center"
@@ -87,7 +87,7 @@
             <EditText
                 android:id="@+id/txp10"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="12dp"
@@ -99,7 +99,7 @@
             <EditText
                 android:id="@+id/txp12"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="50dp"
                 android:layout_marginTop="12dp"
                 android:ems="10"
                 android:gravity="center"

@@ -48,6 +48,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
     String idIncidencia;
     String cedula;
     String estado;
+    String departamento;
     String trampa;
     String comentario;
     RequestQueue requestQueue;
@@ -66,6 +67,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
         estado = getIntent().getStringExtra("estado");
         comentario = getIntent().getStringExtra("comentario");
         cedula = getIntent().getStringExtra("cedula");
+        departamento = getIntent().getStringExtra("departamento");
         //trampa = getIntent().getStringExtra("trampa");
 
         SharedPreferences admin=this.getSharedPreferences("x",MODE_PRIVATE);
@@ -83,6 +85,13 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
         }
 
 
+        if(tip_usuario.equals("C")) {
+
+            v29.btnestad.setVisibility(View.VISIBLE);
+        }else{
+
+            v29.btnestad.setVisibility(View.INVISIBLE);
+        }
 
 
         v29.btnestado.setOnClickListener(new View.OnClickListener() {
@@ -93,6 +102,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                 intent.putExtra("idClient",idCliente);
                 intent.putExtra("idIncidencia",idIncidencia);
                 intent.putExtra("cedula",cedula);
+                intent.putExtra("departamento",departamento);
                 startActivity(intent);
 
                     /*Log.i("result","idClient: "+holder.idClient.getText().toString() );
@@ -101,6 +111,8 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
 
 
         });
+
+
 
         Log.i("result","IDCLiente: "+idCliente);
         Log.i("result","IDCLiente: "+idIncidencia);
@@ -117,6 +129,8 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                     try {
                         JSONObject objUser= new JSONObject(response.toString());
                         Log.i("result","data:"+response.toString());
+                        /*
+
 
                         v29.tvm1.setText(objUser.getString("nombre"));
                         v29.tvm2.setText(objUser.getString("cedula"));
@@ -127,24 +141,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                         v29.tvm7.setText(objUser.getString("ap"));
                         v29.tvm9.setText(comentario);
                         v29.tvm8.setText(objUser.getString("estado"));
-
-                       /* if ( estado.equals("0")){
-                            estado = "Receptado";
-
-
-                        } else if (estado.equals("1")){
-                            estado = "En curso";
-                            v29.tvm8.setText(estado);
-
-                        }else if (estado.equals("2")){
-                            estado = "Finalizado";
-                            v29.tvm8.setText(estado);
-
-                        }
-
-                        */
-                        //Toast.makeText( getBaseContext(), "Bienvenido "+nombre, Toast.LENGTH_SHORT).show();
-
+*/
                     }
 
                     catch (JSONException e) {
@@ -175,6 +172,62 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
         };
         requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+
+
+        /********************************/
+        v29.btnestad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(getApplicationContext(), "esta iniciando", Toast.LENGTH_SHORT).show();
+
+                String URL= "http://192.168.101.5/conexion_php/modificar_estado.php";
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("oliver",response);
+                        if(response.equals("1")){
+                            Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
+                        }
+
+                        Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_usuario.class);
+                        startActivity(intent);
+
+                    }
+
+                }, new Response.ErrorListener(){
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parametros = new HashMap<String, String>();
+                        //parametros.put("id".toString().toString());
+                        parametros.put("cedula", cedula.toString());
+                        parametros.put("estado", String.valueOf(3));
+                        parametros.put("idIncidencia",idIncidencia);
+
+                        return parametros;
+                    }
+                };
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                requestQueue.add(stringRequest);
+
+
+                    /*Log.i("result","idClient: "+holder.idClient.getText().toString() );
+                    Log.i("result","Comentario: "+holder.comentario.getText().toString() );*/
+            }
+
+
+        });
 
 
         /********************************/

@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,8 +38,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-
-public class interfaz_tecnico extends AppCompatActivity {
+public class interfaz_tecnico extends General {
 
     private ActivityInterfazTecnicoBinding v6;
 
@@ -178,6 +178,8 @@ public class interfaz_tecnico extends AppCompatActivity {
 
             }
         });
+
+
     }
 
 
@@ -192,7 +194,7 @@ public class interfaz_tecnico extends AppCompatActivity {
         if (count == 0) {
             // if no pending notification remove badge
             menuItem = menu.findItem(R.id.notify);
-            menuItem.setActionView(null);
+            //menuItem.setActionView(null);
 
         } else {
 
@@ -202,10 +204,20 @@ public class interfaz_tecnico extends AppCompatActivity {
             View view = menuItem.getActionView();
             // get the text view of the action view for the nav item
             notification = view.findViewById(R.id.notification);
+            //notification.setEnabled(false);
             // set the pending notifications value
             notification.setText(String.valueOf(count));
             menuItem = menu.findItem(R.id.notify);
 
+            notification.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("result","xxxxxxxxxxxxxxxxxxxxxx");
+                    Intent intent = new Intent(getApplicationContext(), interfaz_aviso.class);
+                    startActivity(intent);
+
+                }
+            });
 
         }
         return super.onCreateOptionsMenu(menu);
@@ -252,6 +264,7 @@ public class interfaz_tecnico extends AppCompatActivity {
 
 
     //////////////**notificacion item**/////////////////////////////
+
 
 
 

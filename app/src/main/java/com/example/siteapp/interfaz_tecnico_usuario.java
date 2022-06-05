@@ -96,7 +96,46 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
         v5.btn11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insertarproducto("http://192.168.101.5/conexion_php/modificar_usuario.php");
+
+
+
+                if (v5.txp6.getText().toString().isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Campo nombre vacio",Toast.LENGTH_SHORT).show();
+                } else {
+                    if (v5.txp7.getText().toString().isEmpty()){
+                        Toast.makeText(getApplicationContext(), "Campo cedula vacio",Toast.LENGTH_SHORT).show();
+
+                    }else {
+                        if (v5.txp8.getText().toString().isEmpty()) {
+                            Toast.makeText(getApplicationContext(), "Campo contrasena vacio", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else {
+                            if (v5.txp9.getText().toString().isEmpty()) {
+                                Toast.makeText(getApplicationContext(), "Campo telefono vacio", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else {
+                                if (v5.txp10.getText().toString().isEmpty()) {
+                                    Toast.makeText(getApplicationContext(), "Campo direccion vacio", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else {
+                                    if (v5.txp12.getText().toString().isEmpty()) {
+                                        Toast.makeText(getApplicationContext(), "Campo ap vacio", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                    else {
+
+
+                                        insertarproducto("http://192.168.101.5/conexion_php/modificar_usuario.php\"");
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         });
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".interfaz_mostrar_incidencias_tecnicas_nivel_usuario">
+    tools:context=".interfaz_mostrar_incidencias_dependiente">
 
 
     <ScrollView
@@ -289,7 +289,7 @@
 
                 <TextView
                     android:id="@+id/tvm8"
-                    android:layout_width="84dp"
+                    android:layout_width="110dp"
                     android:layout_height="50dp"
                     android:layout_below="@+id/tvmc7"
                     android:layout_marginStart="5dp"
@@ -337,29 +337,15 @@
 
                 <Button
                     android:id="@+id/btnestado"
-                    android:layout_width="55dp"
+                    android:layout_width="67dp"
                     android:layout_height="55dp"
                     android:layout_below="@+id/tvmc7"
                     android:layout_alignStart="@+id/tvm8"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="90dp"
+                    android:layout_marginStart="120dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="89dp"
+                    android:layout_marginEnd="50dp"
                     android:drawableEnd="@drawable/ic_touch_app_black_48dp"
-                    android:text="."
-                    tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/btnestad"
-                    android:layout_width="67dp"
-                    android:layout_height="55dp"
-                    android:layout_below="@+id/tvmc7"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="68dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_toEndOf="@+id/tvm8"
-                    android:drawableEnd="@drawable/ic_baseline_cancel_24"
                     android:text="."
                     tools:ignore="HardcodedText" />
 
@@ -370,3 +356,6 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+

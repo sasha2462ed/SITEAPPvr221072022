@@ -2,11 +2,14 @@ package com.example.siteapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -23,27 +27,36 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.siteapp.databinding.ActivityDepartamentoAdministrativoBinding;
 import com.example.siteapp.databinding.ActivityDepartamentoTecnicoBinding;
 import com.example.siteapp.databinding.ActivityInterfazEstadoBinding;
+import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class interfaz_estado extends AppCompatActivity {
     private ActivityInterfazEstadoBinding v30;
     //int valor3=0;
-    private ListView lv4;
+    private Spinner sping;
     String idCliente;
     String idIncidencia;
     String cedula;
-    String state;
+    String departamento;
+    int state;
+    String stt;
     RequestQueue requestQueue;
 
     @Override
@@ -54,16 +67,29 @@ public class interfaz_estado extends AppCompatActivity {
         View view = v30.getRoot();
         setContentView(view);
 
+        RecyclerView lisst=v30.listg;
+        ArrayList<Gestion> itemRec5;
+        itemRec5=new ArrayList();
+
+
         idCliente = getIntent().getStringExtra("idClient");
         idIncidencia = getIntent().getStringExtra("idIncidencia");
         cedula = getIntent().getStringExtra("cedula");
+        departamento = getIntent().getStringExtra("departamento");
+        Log.i("result", "Datagestion: " + idCliente);
+        Log.i("result", "Datagestion: " + departamento);
 
 ///////////////////////////*************************////////////////////////
 
+        Log.i("result","Data: "+departamento);
+
+
+        ////////////********************///////////////////////////////////////////
 
         String URL="http://192.168.101.5/conexion_php/item_estados.php";
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
+        //parametros.put("id".toString().toString());
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
@@ -73,80 +99,71 @@ public class interfaz_estado extends AppCompatActivity {
                     JSONArray id = new JSONArray(nodos.get(0).toString());
                     JSONArray name = new JSONArray(nodos.get(1).toString());
 
-                    lv4 = (ListView) findViewById(R.id.lv4);
-                    String[] problemas1 = new String[name.length()];
+                    sping = v30.sping;
+                    String[] opciones = new String[name.length()];
 
                     JSONObject nods = new JSONObject();
 
+
                     for (int i = 0; i < name.length(); i++) {
-                        problemas1[i] = name.get(i).toString();
+                        opciones[i] = name.get(i).toString();
                         nods.put(name.get(i).toString(), id.get(i).toString());
                     }
 
-                    lv4 = (ListView) findViewById(R.id.lv4);
-                    ArrayAdapter<String> adapter3 = new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_items, problemas1);
-                    lv4.setAdapter(adapter3);
+                    ArrayAdapter<String> adapter7 = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item_estado, opciones);
 
-                    v30.lv4.setOnItemClickListener (new AdapterView.OnItemClickListener() {
+                    sping.setAdapter(adapter7);
 
+
+                    sping.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            //valor=lv2.getItemAtPosition(position).toString();
-                            int valor3=0;
-                            valor3 = position+1;
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            stt = sping.getItemAtPosition(position).toString();
 
 
-                            Toast.makeText(getApplicationContext(), "Estado de la incidencia " + valor3 , Toast.LENGTH_SHORT).show();
-                            Log.i("result","Estado: "+valor3);
-                            //////////*////////////////
-
-                            //////////*////////////////
-
-                            try{
-
-                                int finalValor = valor3;
+                            try {
+                                state = Integer.parseInt(String.valueOf(nods.getString(stt)));
                                 v30.btnstate.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
 
-                                        String URL= "http://192.168.101.5/conexion_php/modificar_estado.php";
+                                        String URL1 = "http://192.168.101.5/conexion_php/modificar_estado.php";
 
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL1, new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String response) {
-                                                Log.i("oliver",response);
-                                                if(response.equals("1")){
+                                                Log.i("oliver", response);
+                                                if (response.equals("1")) {
                                                     Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
 
 
-                                                }else{
+                                                } else {
                                                     Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
 
 
                                                 }
 
-                                                Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_usuario.class);
+                                                Intent intent = new Intent(getApplicationContext(), interfaz_mostrar_incidencias_usuario.class);
                                                 startActivity(intent);
 
                                             }
 
-                                        }, new Response.ErrorListener(){
+                                        }, new Response.ErrorListener() {
                                             @Override
                                             public void onErrorResponse(VolleyError error) {
-                                                Toast.makeText(getApplicationContext(),error.toString(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
                                             }
 
-                                        }){
+                                        }) {
                                             @Override
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> parametros = new HashMap<String, String>();
                                                 //parametros.put("id".toString().toString());
                                                 parametros.put("cedula", cedula.toString());
-                                                parametros.put("estado", String.valueOf(finalValor));
-                                                parametros.put("idIncidencia",idIncidencia);
-                                                Log.i("result","Estado: "+finalValor);
-                                                Log.i("result","Estado: "+cedula);
-                                                Log.i("result","Estado: "+idCliente);
+                                                parametros.put("estado", String.valueOf(state));
+                                                parametros.put("cierre", v30.resoluciong.getText().toString());
+                                                parametros.put("idIncidencia", idIncidencia);
+
                                                 return parametros;
                                             }
                                         };
@@ -157,45 +174,114 @@ public class interfaz_estado extends AppCompatActivity {
                                     }
                                 });
 
-
-
-                            } catch (Exception e) {
+                            } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
-
-
-                            ///********************//
-
                         }
 
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
                     });
-
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
-        }, new Response.ErrorListener(){
+
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
             }
 
-        }){
+        }) {
             @Override
-            protected Map<String, String> getParams () throws AuthFailureError {
-                Map<String,String> parametros = new HashMap<String, String>();
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
                 return parametros;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-//////////////////////////**********************//////////////////////////////////////
+
+        /****************************************/
+        /***/
+
+        /****APS/
+         /****************************************/
+
+
+        String URL3 = "http://192.168.101.5/conexion_php/detalle_gestion.php";
+
+        StringRequest stringRequest1 = new StringRequest(Request.Method.POST,URL3, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                if (!response.isEmpty()) {
+                    try {
+                        Log.i("result", "Datagestionon: " + response);
+                        JSONArray object = null;
+
+                        object = new JSONArray(response);
+
+
+                        for (int i = 0; i < object.length(); i++) {
+                            JSONObject gestion = object.getJSONObject(i);
+
+                            itemRec5.add(new Gestion(
+
+                                            gestion.getString("cierre").toString(),
+                                            gestion.getString("tipo").toString(),
+                                            gestion.getString("fecha").toString()
+
+
+                                    )
+                            );
+                        }
+
+
+                        lisst.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                        RecyclerView.Adapter<myGestion.Contenet> adapter54= new myGestion(itemRec5);
+                        lisst.setAdapter(adapter54);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+
+                    Toast.makeText(getApplicationContext(), "Sin notificaciones que mostrar", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("result", error.toString());
+
+            }
+
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> parametros = new HashMap<String, String>();
+                parametros.put("departamento", departamento);
+                parametros.put("id_usuarios", idCliente);
+                return parametros;
+            }
+        };
+        requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest1);
+
+
+
+        //return false;
+
+
+        /****************************************/
+        /***/
+
     }
 }
-
-

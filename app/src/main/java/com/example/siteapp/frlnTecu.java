@@ -112,7 +112,9 @@ public class frlnTecu extends Fragment {
                                             indicencia.getString("hora").toString(),
                                             indicencia.getString("estado").toString(),
                                             indicencia.getString("id").toString(),
-                                            indicencia.getString("cedula").toString()
+                                            indicencia.getString("cedula").toString(),
+                                            indicencia.getString("departamento").toString()
+
 
                                     )
                             );

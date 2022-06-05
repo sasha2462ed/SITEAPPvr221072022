@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -40,6 +41,7 @@ public class frInTec<spinner> extends Fragment {
     private Spinner spinner_estado;
     String state_frag;
     String tamanio;
+    int ga;
 
 
     public frInTec() {
@@ -63,8 +65,6 @@ public class frInTec<spinner> extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-
-
     }
 
     @Override
@@ -74,123 +74,159 @@ public class frInTec<spinner> extends Fragment {
         layout=FragmentFrInTecBinding.inflate(inflater,container,false);
         View v=layout.getRoot();
         //View vista= inflater.inflate(R.layout.fragment_fr_in_tec, container, false);
-
-        spinner_estado = layout.spinnerEstado;
-        String[] opciones = {"Receptado", "En curso", "Finalizado"};
-        ArrayAdapter<String> adapter5 = new ArrayAdapter<String>(getContext(), R.layout.spinner_item_estado, opciones);
-        spinner_estado.setAdapter(adapter5);
-
         //Log.i("result","Data: "+state_frag);
-
         RecyclerView list=layout.lista;
         ArrayList<Incidencias> itemRec;
-
         itemRec=new ArrayList();
 
         /*******************************/
 
+        String URL="http://192.168.101.5/conexion_php/item_estados.php";
 
-        layout.btnFrag.setOnClickListener(new View.OnClickListener() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
             @Override
-            public void onClick(View v) {
+            public void onResponse(String response) {
 
-                String URL;
-                SharedPreferences admin=requireContext().getSharedPreferences("x", Context.MODE_PRIVATE);
-                String tip_usuario=admin.getString("tip_usuario","");
-                Log.i("result","Data: "+tip_usuario);
+                try {
+                    JSONArray nodos=new JSONArray(response);
 
+                    JSONArray id=new JSONArray(nodos.get(0).toString());
+                    JSONArray name=new JSONArray(nodos.get(1).toString());
 
+                    String[] opciones = new String[name.length()];
+                    JSONObject nods=new JSONObject();
 
-                    URL="http://192.168.101.5/conexion_php/buscar_incidenciastec.php";
+                    for (int i=0;i<name.length();i++){
+                        opciones[i]=name.get(i).toString();
+                        nods.put(name.get(i).toString(), id.get(i).toString());
+                    }
 
+                    spinner_estado = layout.spinnerEstado;
+                    ArrayAdapter<String> adapter5 = new ArrayAdapter<String>(getContext(), R.layout.spinner_item_estado, opciones);
+                    spinner_estado.setAdapter(adapter5);
 
-                state_frag = spinner_estado.getSelectedItem().toString();
-                switch (state_frag) {
-                    case "Receptado":
-                        state_frag = "0";
-
-                        break;
-                    case "En curso":
-                        state_frag = "1";
-
-                        break;
-                    case "Finalizado":
-                        state_frag = "2";
-                        break;
-                }
-
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+                    spinner_estado.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
-                        public void onResponse(String response) {
-                            if(!response.isEmpty()) {
-                                try {
-                                    JSONArray object= null;
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            state_frag = spinner_estado.getItemAtPosition(position).toString();
+                            //Log.i("result2",statenod);
 
-                                    object = new JSONArray(response);
-                                    Log.i("result","Data: "+response);
-                                    itemRec.clear();
-                                    for(int i=0;i<object.length();i++) {
-                                        JSONObject indicencia = object.getJSONObject(i);
+                            try {
 
-                                        itemRec.add(new Incidencias(
-                                                        indicencia.getString("idIncidencias"),
-                                                        indicencia.getString("tipo").toString(),
-                                                        indicencia.getString("comentario").toString(),
-                                                        indicencia.getString("hora").toString(),
-                                                        indicencia.getString("estado").toString(),
-                                                        indicencia.getString("id").toString(),
-                                                indicencia.getString("cedula").toString()
+                                ga = Integer.parseInt(String.valueOf(nods.getString(state_frag)));
+                                Log.i("result5", String.valueOf(ga));
+
+                                layout.btnFrag.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                String URL;
+                                URL="http://192.168.101.5/conexion_php/buscar_incidenciastec.php";
 
 
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if(!response.isEmpty()) {
+                                            try {
+                                                JSONArray object= null;
 
-                                                )
-                                        );
+                                                object = new JSONArray(response);
+                                                Log.i("result","Data: "+response);
+                                                itemRec.clear();
+                                                for(int i=0;i<object.length();i++) {
+                                                    JSONObject indicencia = object.getJSONObject(i);
+
+                                                    itemRec.add(new Incidencias(
+                                                                    indicencia.getString("idIncidencias"),
+                                                                    indicencia.getString("tipo").toString(),
+                                                                    indicencia.getString("comentario").toString(),
+                                                                    indicencia.getString("hora").toString(),
+                                                                    indicencia.getString("estado").toString(),
+                                                                    indicencia.getString("id").toString(),
+                                                                    indicencia.getString("cedula").toString(),
+                                                            indicencia.getString("departamento").toString()
+                                                            )
+                                                    );
+                                                }
+
+                                                list.setLayoutManager(new LinearLayoutManager(requireContext()));
+                                                RecyclerView.Adapter adapter= new myAdapter(itemRec);
+                                                adapter.notifyDataSetChanged();
+                                                list.setAdapter(adapter);
+
+                                            }
+
+                                            catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                        }else{
+                                            Toast.makeText(requireContext(), "Sin incidencias que mostrar", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    }
+                                }, new Response.ErrorListener(){
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        //Toast.makeText(MainActivity.this,error.toString(), Toast.LENGTH_SHORT).show();
+
                                     }
 
-                                    list.setLayoutManager(new LinearLayoutManager(requireContext()));
-                                    RecyclerView.Adapter adapter= new myAdapter(itemRec);
-                                    adapter.notifyDataSetChanged();
-                                    list.setAdapter(adapter);
-                                    tamanio = String.valueOf(itemRec.size());
-                                    Log.i("result","Data: "+tamanio);
+                                }){
+                                    @Override
+                                    protected Map<String, String> getParams () throws AuthFailureError {
+                                        Map<String,String> parametros = new HashMap<String, String>();
+
+                                        parametros.put("departamento", String.valueOf(1));
+                                        parametros.put("estado", String.valueOf(ga));
 
 
+                                        return parametros;
+                                    }
+                                };
+                                RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+                                requestQueue.add(stringRequest);
 
-                                }
 
-                                catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                                    }
+                                });
 
-                            }else{
-                                Toast.makeText(requireContext(), "Sin incidencias que mostrar", Toast.LENGTH_SHORT).show();
-
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
-                    }, new Response.ErrorListener(){
+
                         @Override
-                        public void onErrorResponse(VolleyError error) {
+                        public void onNothingSelected(AdapterView<?> parent) {
 
                         }
+                    });
 
-                    }){
-                        @Override
-                        protected Map<String, String> getParams () throws AuthFailureError {
-                            Map<String,String> parametros = new HashMap<String, String>();
-
-                            parametros.put("departamento", String.valueOf(1));
-                            parametros.put("estado", String.valueOf(state_frag));
-
-
-                            return parametros;
-                        }
-                    };
-                    RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
-                    requestQueue.add(stringRequest);
-
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
             }
-        });
+
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams () throws AuthFailureError {
+                Map<String,String> parametros = new HashMap<String, String>();
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+        /****************************************/
+
+///////////////////*******************///////////////////////////////////////////////
 
         /********************************/
         return v;

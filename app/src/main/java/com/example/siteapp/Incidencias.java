@@ -12,8 +12,9 @@ public class Incidencias {
     String idUser;
     String idIncidencias;
     String cedula;
+    String departamento;
 
-    public Incidencias(String idIncidencias,String tipo,String comentario ,String hora ,String estado, String Id,String cedula) {
+    public Incidencias(String idIncidencias,String tipo,String comentario ,String hora ,String estado, String Id,String cedula, String departamento) {
 
         this.tipo=tipo;
         this.comentario=comentario;
@@ -22,6 +23,7 @@ public class Incidencias {
         this.idUser=Id;
         this.idIncidencias=idIncidencias;
         this.cedula=cedula;
+        this.departamento=departamento;
 
 
     }

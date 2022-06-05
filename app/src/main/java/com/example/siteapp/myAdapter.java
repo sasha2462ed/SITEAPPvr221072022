@@ -40,6 +40,7 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ContenetViews> {
 
         String idIncidencias=items.get(position).idIncidencias;
         String cedula=items.get(position).cedula;
+        String departamento=items.get(position).departamento;
         holder.tipo.setText(items.get(position).tipo);
         holder.comentario.setText(items.get(position).comentario);
         holder.fecha.setText(items.get(position).hora);
@@ -59,6 +60,7 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ContenetViews> {
                     intent.putExtra("idClient",holder.idClient.getText().toString());
                     intent.putExtra("idIncidencia",idIncidencias);
                     intent.putExtra("cedula",cedula);
+                    intent.putExtra("departamento", departamento);
                     intent.putExtra("estado",holder.estado.getText().toString());
                     intent.putExtra("comentario",holder.comentario.getText().toString());
                     v.getContext().startActivity(intent);

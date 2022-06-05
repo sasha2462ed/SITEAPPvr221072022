@@ -6,28 +6,55 @@
     android:layout_height="match_parent"
     tools:context=".interfaz_estado">
 
-    <ListView
-        android:id="@+id/lv4"
-        android:layout_width="320dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="32dp"
-        android:foregroundGravity="center"
+    <Spinner
+        android:id="@+id/sping"
+        android:layout_width="177dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/btnstate"
         android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="46dp"
         android:layout_marginEnd="121dp"
-        android:text="Guardar estado"
+        android:text="AGREGAR RESOLUCION"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/sping"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <EditText
+        android:id="@+id/resoluciong"
+        android:layout_width="313dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="AGREGAR RESOLUCION"
+        android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lv4"
-        tools:ignore="HardcodedText" />
+        app:layout_constraintTop_toBottomOf="@+id/btnstate" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listg"
+        android:layout_width="450dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resoluciong"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
