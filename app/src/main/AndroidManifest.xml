@@ -15,6 +15,22 @@
         android:theme="@style/Theme.SITEAPP"
         tools:ignore="AllowBackup">
         <activity
+            android:name=".onboarding"
+            android:exported="true" />
+        <activity
+            android:name=".menuOnboarding"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".oanbording"
+            android:exported="true"/>
+
+        <activity
             android:name=".interfaz_consultar"
             android:exported="true" />
         <activity

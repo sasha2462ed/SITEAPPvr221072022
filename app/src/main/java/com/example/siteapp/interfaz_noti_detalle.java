@@ -24,14 +24,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class interfaz_noti_detalle extends AppCompatActivity {
+public class interfaz_noti_detalle extends General {
     private ActivityInterfazNotiDetalleBinding v55;
     String comentario;
     String asunto;
     String idNoti;
     String origen;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +53,6 @@ public class interfaz_noti_detalle extends AppCompatActivity {
 
                 String URL="http://192.168.101.5/conexion_php/modificar_estado_noti.php";
 
-
-
                 StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -65,12 +61,8 @@ public class interfaz_noti_detalle extends AppCompatActivity {
                         }else{
                         }
 
-
                             Intent intent = new Intent( getApplicationContext(),interfaz_notificaciones.class);
                             startActivity(intent);
-
-
-
 
                     }
 
@@ -94,12 +86,8 @@ public class interfaz_noti_detalle extends AppCompatActivity {
                 RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                 requestQueue.add(stringRequest);
 
-
             }
         });
-
-
-
 
     }
 }

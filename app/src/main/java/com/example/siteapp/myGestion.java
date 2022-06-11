@@ -38,6 +38,7 @@ public class myGestion extends RecyclerView.Adapter<myGestion.Contenet> {
         holder.cierre.setText(items.get(position).cierre);
         holder.tipo.setText(items.get(position).tipo);
         holder.fecha.setText(items.get(position).fecha);
+        holder.idd.setText(items.get(position).idd);
 
         /***/
         /***/
@@ -62,6 +63,7 @@ public class myGestion extends RecyclerView.Adapter<myGestion.Contenet> {
         TextView cierre;
         TextView tipo;
         TextView fecha;
+        TextView idd;
 
 
 
@@ -73,6 +75,7 @@ public class myGestion extends RecyclerView.Adapter<myGestion.Contenet> {
             cierre=itemView.findViewById(R.id.cierreg);
             tipo=itemView.findViewById(R.id.resumeng);
             fecha=itemView.findViewById(R.id.fechag);
+            idd=itemView.findViewById(R.id.idd);
 
             /*cv.setOnClickListener(new View.OnClickListener() {
                 @Override

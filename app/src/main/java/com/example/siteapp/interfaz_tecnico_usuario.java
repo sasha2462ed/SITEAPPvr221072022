@@ -30,7 +30,7 @@ import java.util.Map;
 public class interfaz_tecnico_usuario extends AppCompatActivity {
 
     RequestQueue requestQueue;
-    String trampa;
+
     private ActivityInterfazTecnicoUsuarioBinding v5;
 
     @Override
@@ -40,7 +40,7 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
         v5 = ActivityInterfazTecnicoUsuarioBinding.inflate(getLayoutInflater());
         View view = v5.getRoot();
         setContentView(view);
-        trampa = getIntent().getStringExtra("trampa");
+
 
 
         v5.btn9.setOnClickListener(new View.OnClickListener() {
@@ -89,76 +89,19 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
         v5.btn10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                buscarproducto("http://192.168.101.5/conexion_php/buscar_usuario.php?cedula="+ v5.txp7.getText()+"");
+                Intent intent = new Intent( getApplicationContext(),interfaz_consultar.class);
+                intent.putExtra("buscar", v5.txp7.getText()+"");
+                startActivity(intent);
+
             }
         });
 
-        v5.btn11.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-
-                if (v5.txp6.getText().toString().isEmpty()){
-                    Toast.makeText(getApplicationContext(), "Campo nombre vacio",Toast.LENGTH_SHORT).show();
-                } else {
-                    if (v5.txp7.getText().toString().isEmpty()){
-                        Toast.makeText(getApplicationContext(), "Campo cedula vacio",Toast.LENGTH_SHORT).show();
-
-                    }else {
-                        if (v5.txp8.getText().toString().isEmpty()) {
-                            Toast.makeText(getApplicationContext(), "Campo contrasena vacio", Toast.LENGTH_SHORT).show();
-
-                        }
-                        else {
-                            if (v5.txp9.getText().toString().isEmpty()) {
-                                Toast.makeText(getApplicationContext(), "Campo telefono vacio", Toast.LENGTH_SHORT).show();
-
-                            }
-                            else {
-                                if (v5.txp10.getText().toString().isEmpty()) {
-                                    Toast.makeText(getApplicationContext(), "Campo direccion vacio", Toast.LENGTH_SHORT).show();
-
-                                }
-                                else {
-                                    if (v5.txp12.getText().toString().isEmpty()) {
-                                        Toast.makeText(getApplicationContext(), "Campo ap vacio", Toast.LENGTH_SHORT).show();
-
-                                    }
-                                    else {
-
-
-                                        insertarproducto("http://192.168.101.5/conexion_php/modificar_usuario.php\"");
-
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
 
         v5.btn12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
-                String tip_usuario=admin.getString("tip_usuario","");
-
-                if (tip_usuario.equals("T")){
-
-                    Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
-                    startActivity(intent);
-
-                }
-
-                else if (tip_usuario.equals("D")){
-
-                    Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
-                    startActivity(intent);
-
-
-                }
+                Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
+                startActivity(intent);
             }
         });
 
@@ -179,6 +122,12 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
                 Log.i("oliver",response);
                 if(response.equals("1")){
                     Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
+                    v5.txp6.getText().clear();
+                    v5.txp7.getText().clear();
+                    v5.txp8.getText().clear();
+                    v5.txp9.getText().clear();
+                    v5.txp10.getText().clear();
+                    v5.txp12.getText().clear();
 
 
                 }else{
@@ -187,8 +136,6 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
 
                 }
 
-                Intent intent = new Intent( getApplicationContext(),interfaz_tecnico_usuario.class);
-                startActivity(intent);
 
             }
 
@@ -216,63 +163,5 @@ public class interfaz_tecnico_usuario extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void buscarproducto (String URL){
-        JsonArrayRequest jsonArrayRequest= new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
 
-
-
-                if (response != null) {
-                    try {
-
-
-                        JSONObject jsonObject = null;
-                        for (int i = 0; i < response.length(); i++) {
-                            jsonObject = response.getJSONObject(i);
-                            v5.txp6.setText(jsonObject.getString("nombre"));
-                            v5.txp7.setText(jsonObject.getString("cedula"));
-                            v5.txp8.setText(jsonObject.getString("contrasena"));
-                            v5.txp9.setText(jsonObject.getString("telefono"));
-                            v5.txp10.setText(jsonObject.getString("direccion"));
-                            v5.txp12.setText(jsonObject.getString("ap"));
-                        }
-                    } catch (JSONException e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        //Toast.makeText(getApplicationContext(), "Sin incidencias que mostrar", Toast.LENGTH_SHORT).show();
-                    }
-
-
-                } else {
-
-                    Toast.makeText(getApplicationContext(), "Usuario no registrado",Toast.LENGTH_SHORT).show();
-                    v5.txp6.getText().clear();
-                    v5.txp7.getText().clear();
-                    v5.txp8.getText().clear();
-                    v5.txp9.getText().clear();
-                    v5.txp10.getText().clear();
-                    v5.txp12.getText().clear();
-
-
-                }
-            }
-
-
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //Toast.makeText(getApplicationContext(), "Error de conexion",Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), "Usuario no registrado",Toast.LENGTH_SHORT).show();
-                v5.txp6.getText().clear();
-                v5.txp7.getText().clear();
-                v5.txp8.getText().clear();
-                v5.txp9.getText().clear();
-                v5.txp10.getText().clear();
-                v5.txp12.getText().clear();
-
-            }
-        });
-        requestQueue=Volley.newRequestQueue(this);
-        requestQueue.add(jsonArrayRequest);
-    }
 }

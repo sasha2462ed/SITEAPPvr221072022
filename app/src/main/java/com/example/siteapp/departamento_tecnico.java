@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +31,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class departamento_tecnico extends AppCompatActivity {
+public class departamento_tecnico extends General {
 
     RequestQueue requestQueue;
     private ActivityDepartamentoTecnicoBinding v3;
@@ -38,7 +39,6 @@ public class departamento_tecnico extends AppCompatActivity {
     private ListView lv1;
     Context ct;
     String trampa;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,9 +48,10 @@ public class departamento_tecnico extends AppCompatActivity {
         View view = v3.getRoot();
         setContentView(view);
         trampa = getIntent().getStringExtra("trampa");
-/////////*****************///////////////////////////
-
         ct=view.getContext();
+
+
+
         String URL="http://192.168.101.5/conexion_php/listtec.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
@@ -108,7 +109,7 @@ public class departamento_tecnico extends AppCompatActivity {
                                                 Log.i("oliver",response);
                                                 if(response.equals("1")){
                                                     Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
-
+                                                    v3.txp4tec.getText().clear();
 
                                                 }else{
                                                     Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
@@ -116,8 +117,6 @@ public class departamento_tecnico extends AppCompatActivity {
 
                                                 }
 
-                                                Intent intent = new Intent( getApplicationContext(),departamento_tecnico.class);
-                                                startActivity(intent);
 
                                             }
 
@@ -153,16 +152,9 @@ public class departamento_tecnico extends AppCompatActivity {
                                     }
                                 });
 
-
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
-
-
-
-                            ///********************//
 
                         }
 
@@ -190,13 +182,6 @@ public class departamento_tecnico extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-
-
-
-
-        ////////////////**********************/////////
-
-
 
         v3.btn6tec.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,6 +215,5 @@ public class departamento_tecnico extends AppCompatActivity {
         });
 
     }
-
 }
 

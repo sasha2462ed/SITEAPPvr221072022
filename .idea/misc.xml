@@ -9,7 +9,7 @@
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_graficos.xml" value="0.192481884057971" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_aviso.xml" value="0.24818840579710144" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_consultar.xml" value="0.264" />
-        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_dependiente.xml" value="0.1" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_dependiente.xml" value="0.16" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_envio_notificacion.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_estado.xml" value="0.21240942028985507" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_estado_user.xml" value="0.21195652173913043" />
@@ -28,10 +28,21 @@
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_tecnico_usuario.xml" value="0.2" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_interfaz_usuario.xml" value="0.264" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_menu_onboarding.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_oanbording.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/activity_onboarding.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_in_ad.xml" value="0.2390625" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_in_blk.xml" value="0.24592391304347827" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_in_tec.xml" value="0.253125" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_in_tecu.xml" value="0.24003623188405798" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_step1.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_step2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_step3.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_step4.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_stup1.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_stup2.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_stup3.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_fr_stup4.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_frln_adu.xml" value="0.24003623188405798" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_frln_ap.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/PLAYER/AndroidStudioProjects/SITEAPP/app/src/main/res/layout/fragment_frln_b.xml" value="0.22146739130434784" />

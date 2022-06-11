@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class interfaz_notificaciones extends AppCompatActivity {
+public class interfaz_notificaciones extends General {
 
     private ActivityInterfazNotificacionesBinding layout;
     Context ct;

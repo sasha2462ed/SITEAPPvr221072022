@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class interfaz_estado extends AppCompatActivity {
+public class interfaz_estado extends General {
     private ActivityInterfazEstadoBinding v30;
     //int valor3=0;
     private Spinner sping;
@@ -77,11 +77,63 @@ public class interfaz_estado extends AppCompatActivity {
         cedula = getIntent().getStringExtra("cedula");
         departamento = getIntent().getStringExtra("departamento");
         Log.i("result", "Datagestion: " + idCliente);
-        Log.i("result", "Datagestion: " + departamento);
+        Log.i("result", "Datagestion: " + idIncidencia);
 
 ///////////////////////////*************************////////////////////////
 
         Log.i("result","Data: "+departamento);
+        //parametros.put("cierre", v30.resoluciong.getText().toString());
+
+
+        ///////////**********************//////////////////
+        v30.icono05.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String URL11 = "http://192.168.101.5/conexion_php/insertar_cierre.php";
+
+                StringRequest stringRequest11 = new StringRequest(Request.Method.POST, URL11, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("oliver", response);
+                        if (response.equals("1")) {
+                            Toast.makeText(getBaseContext(), "Comentario agregado", Toast.LENGTH_SHORT).show();
+                            v30.resoluciong.getText().clear();
+
+
+                        } else {
+                            Toast.makeText(getBaseContext(), "Comentario no agregado ", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> parametros = new HashMap<String, String>();
+                        //parametros.put("id".toString().toString());
+                        parametros.put("id_user", idCliente );
+                        parametros.put("id_inc", idIncidencia);
+                        parametros.put("cierre", v30.resoluciong.getText().toString().trim());
+
+
+
+                        return parametros;
+                    }
+                };
+                requestQueue = Volley.newRequestQueue(getApplicationContext());
+                requestQueue.add(stringRequest11);
+
+            }
+        });
+/******************/////////////
 
 
         ////////////********************///////////////////////////////////////////
@@ -140,11 +192,7 @@ public class interfaz_estado extends AppCompatActivity {
                                                 } else {
                                                     Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
 
-
                                                 }
-
-                                                Intent intent = new Intent(getApplicationContext(), interfaz_mostrar_incidencias_usuario.class);
-                                                startActivity(intent);
 
                                             }
 
@@ -159,9 +207,7 @@ public class interfaz_estado extends AppCompatActivity {
                                             protected Map<String, String> getParams() throws AuthFailureError {
                                                 Map<String, String> parametros = new HashMap<String, String>();
                                                 //parametros.put("id".toString().toString());
-                                                parametros.put("cedula", cedula.toString());
                                                 parametros.put("estado", String.valueOf(state));
-                                                parametros.put("cierre", v30.resoluciong.getText().toString());
                                                 parametros.put("idIncidencia", idIncidencia);
 
                                                 return parametros;
@@ -222,20 +268,19 @@ public class interfaz_estado extends AppCompatActivity {
 
                 if (!response.isEmpty()) {
                     try {
-                        Log.i("result", "Datagestionon: " + response);
-                        JSONArray object = null;
+                        JSONArray object= null;
 
                         object = new JSONArray(response);
-
-
-                        for (int i = 0; i < object.length(); i++) {
+                        Log.i("result","Data: "+response);
+                        for(int i=0;i<object.length();i++) {
                             JSONObject gestion = object.getJSONObject(i);
 
                             itemRec5.add(new Gestion(
-
                                             gestion.getString("cierre").toString(),
                                             gestion.getString("tipo").toString(),
-                                            gestion.getString("fecha").toString()
+                                            gestion.getString("fecha").toString(),
+                                    gestion.getString("idd").toString()
+
 
 
                                     )
@@ -253,7 +298,7 @@ public class interfaz_estado extends AppCompatActivity {
 
                 } else {
 
-                    Toast.makeText(getApplicationContext(), "Sin notificaciones que mostrar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Sin resoluciones que mostrar", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -269,6 +314,7 @@ public class interfaz_estado extends AppCompatActivity {
                 Map<String, String> parametros = new HashMap<String, String>();
                 parametros.put("departamento", departamento);
                 parametros.put("id_usuarios", idCliente);
+                parametros.put("idIncidencia", idIncidencia);
                 return parametros;
             }
         };
@@ -283,5 +329,61 @@ public class interfaz_estado extends AppCompatActivity {
         /****************************************/
         /***/
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflador=getMenuInflater();
+        inflador.inflate(R.menu.regresar,menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+        String tip_usuario=admin.getString("tip_usuario","");
+
+        switch (item.getItemId())
+        {
+
+            case R.id.salir:
+
+
+                finishAffinity();
+                System.exit(0);
+
+
+                break;
+
+            case R.id.regresar:
+
+                if(tip_usuario.equals("C")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_usuario.class);
+                    startActivity(intent);
+
+                }
+
+                else if (tip_usuario.equals("T")){
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_nivel_tecnico.class);
+                    startActivity(intent);
+
+
+                }else {
+
+                    Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_nivel_tecnico.class);
+                    startActivity(intent);
+                }
+
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

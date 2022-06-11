@@ -117,14 +117,6 @@
 
 
             <Button
-                android:id="@+id/btn11"
-                android:layout_width="209dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="6dp"
-                android:text="@string/btn11" />
-
-            <Button
                 android:id="@+id/btn12"
                 android:layout_width="209dp"
                 android:layout_height="50dp"

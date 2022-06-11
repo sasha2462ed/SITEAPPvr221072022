@@ -17,14 +17,13 @@ import android.view.View;
 import com.example.siteapp.databinding.ActivityInterfazMostrarGraficasBinding;
 import com.example.siteapp.databinding.ActivityInterfazMostrarIncidenciasAdministrativasBinding;
 
-public class interfaz_mostrar_graficas extends AppCompatActivity {
+public class interfaz_mostrar_graficas extends General {
 
     ActivityInterfazMostrarGraficasBinding layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interfaz_mostrar_graficas);
         layout=ActivityInterfazMostrarGraficasBinding.inflate(getLayoutInflater());
         View view = layout.getRoot();
         setContentView(view);

@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class interfaz_aviso extends AppCompatActivity {
+public class interfaz_aviso extends General {
     private ActivityInterfazAvisoBinding layout;
 
     Context ct;
@@ -188,9 +188,6 @@ public class interfaz_aviso extends AppCompatActivity {
 
 
     }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

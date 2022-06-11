@@ -1,11 +1,17 @@
 package com.example.siteapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,7 +41,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class graficos extends AppCompatActivity {
+public class graficos extends General {
 
     ActivityGraficosBinding layout;
     RequestQueue requestQueue;
@@ -202,7 +208,56 @@ public class graficos extends AppCompatActivity {
 
             }
         });
+        }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflador=getMenuInflater();
+        inflador.inflate(R.menu.graficos,menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
+        String tip_usuario=admin.getString("tip_usuario","");
+
+        switch (item.getItemId())
+        {
+
+            case R.id.nod:
+
+                Intent intent = new Intent( getApplicationContext(),interfaz_graficoN.class);
+                startActivity(intent);
+
+                break;
+
+
+            case R.id.ap:
+
+                intent = new Intent(getApplicationContext(), graficos.class);
+                startActivity(intent);
+
+                break;
+
+
+            case R.id.salir:
+
+
+                    intent = new Intent(getApplicationContext(), interfaz_mostrar_graficas.class);
+                    startActivity(intent);
+
+
+
+
+                break;
 
 
         }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

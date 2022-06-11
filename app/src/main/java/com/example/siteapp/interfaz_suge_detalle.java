@@ -20,7 +20,7 @@ import com.example.siteapp.databinding.ActivityInterfazSugeDetalleBinding;
 import java.util.HashMap;
 import java.util.Map;
 
-public class interfaz_suge_detalle extends AppCompatActivity {
+public class interfaz_suge_detalle extends General {
     private ActivityInterfazSugeDetalleBinding v58;
 
     String comentario;
@@ -62,12 +62,8 @@ public class interfaz_suge_detalle extends AppCompatActivity {
                         }else{
                         }
 
-
-
                             Intent intent = new Intent( getApplicationContext(),interfaz_aviso.class);
                             startActivity(intent);
-
-
 
                     }
 

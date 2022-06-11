@@ -35,7 +35,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class departamento_administrativo extends AppCompatActivity {
+public class departamento_administrativo extends General {
     String trampa;
     private ActivityDepartamentoAdministrativoBinding v4;
     RequestQueue requestQueue;
@@ -112,6 +112,7 @@ public class departamento_administrativo extends AppCompatActivity {
                                                 Log.i("oliver",response);
                                                 if(response.equals("1")){
                                                     Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
+                                                    v4.txp4adm.getText().clear();
 
 
                                                 }else{
@@ -119,9 +120,6 @@ public class departamento_administrativo extends AppCompatActivity {
 
 
                                                 }
-
-                                                Intent intent = new Intent( getApplicationContext(),departamento_administrativo.class);
-                                                startActivity(intent);
 
                                             }
 
@@ -157,16 +155,10 @@ public class departamento_administrativo extends AppCompatActivity {
                                     }
                                 });
 
-
-
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
-
-
-
-                            ///********************//
 
                         }
 
@@ -195,22 +187,7 @@ public class departamento_administrativo extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
-
 /////*******************************************************//////
-
-
-
-
-
-//        v4.lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-//                valor1[0 = problemas1[i];
-//                Toast.makeText(getApplicationContext(), "Su incidencia es " + valor1[0], Toast.LENGTH_SHORT).show();
-//
-//           }
-//        });
-
 
         v4.btn6adm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,10 +220,5 @@ public class departamento_administrativo extends AppCompatActivity {
             }
         });
 
-
-
-
     }
-
-
 }

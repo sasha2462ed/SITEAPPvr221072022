@@ -7,13 +7,15 @@ public class Gestion{
     String cierre;
     String tipo;
     String fecha;
+    String idd;
 
 
 
-    public Gestion(String cierre, String tipo, String fecha) {
+    public Gestion(String cierre, String tipo, String fecha ,String idd) {
         this.cierre=cierre;
         this.tipo=tipo;
         this.fecha=fecha;
+        this.idd=idd;
 
 
 

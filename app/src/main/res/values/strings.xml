@@ -94,6 +94,8 @@
     <string name="frlb">Panel Grafico de Incidencias...</string>
     <string name="frBlank">Panel de Incidencias...</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="txvbo01">Puedes registrar usuarios, consultar y modificar su informacion.</string>
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 

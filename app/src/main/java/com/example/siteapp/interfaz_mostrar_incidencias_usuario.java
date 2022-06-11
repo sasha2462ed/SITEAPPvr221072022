@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import com.example.siteapp.databinding.ActivityInterfazMostrarIncidenciasAdministrativasBinding;
 import com.example.siteapp.databinding.ActivityInterfazMostrarIncidenciasUsuarioBinding;
 
-public class interfaz_mostrar_incidencias_usuario extends AppCompatActivity {
+public class interfaz_mostrar_incidencias_usuario extends General {
 
     ActivityInterfazMostrarIncidenciasUsuarioBinding layout;
     RecyclerView lista;
@@ -32,19 +32,6 @@ public class interfaz_mostrar_incidencias_usuario extends AppCompatActivity {
             layout=ActivityInterfazMostrarIncidenciasUsuarioBinding.inflate(getLayoutInflater());
 
             setContentView(layout.getRoot());
-//        SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
-//        String tipo=admin.getString("tipo","");
-//        Log.i("result","Data: "+tipo);
-
-
-
-/*
-        itemRec=new ArrayList<>();
-        lista=layout.list;
-        lista.setLayoutManager(new LinearLayoutManager(this));
-        RecyclerView.Adapter adapter= new myAdapter(itemRec);
-        lista.setAdapter(adapter);
-*/
 
         }
 
@@ -73,7 +60,6 @@ public class interfaz_mostrar_incidencias_usuario extends AppCompatActivity {
 
                 case R.id.admin:
 
-                    if (tip_usuario.equals("D") && trampa.equals("0")){
 
                         frlnAdu fr3=new frlnAdu();
                         FragmentTransaction mFragmentAdmin = getSupportFragmentManager().beginTransaction();
@@ -81,40 +67,14 @@ public class interfaz_mostrar_incidencias_usuario extends AppCompatActivity {
                         mFragmentAdmin.commit();
 
 
-                    }
-
-                    else if (tip_usuario.equals("D") && trampa.equals("2")){
-
-                        frInAd fr2=new frInAd();
-                        FragmentTransaction mFragmentAdmin = getSupportFragmentManager().beginTransaction();
-                        mFragmentAdmin.replace(layout.containerF.getId(),fr2);
-                        mFragmentAdmin.commit();
-
-
-                    }
-
                     break;
                 case R.id.tecnico:
-
-                   if (tip_usuario.equals("D") && trampa.equals("0")){
 
                         frlnTecu fr4 = new frlnTecu();
                         FragmentTransaction mFragmentTec = getSupportFragmentManager().beginTransaction();
                         mFragmentTec.replace(layout.containerF.getId(),fr4);
                         mFragmentTec.commit();
 
-
-                    }
-
-                    else if (tip_usuario.equals("D") && trampa.equals("2")){
-
-                        frInTec fr1 = new frInTec();
-                        FragmentTransaction mFragmentTec = getSupportFragmentManager().beginTransaction();
-                        mFragmentTec.replace(layout.containerF.getId(),fr1);
-                        mFragmentTec.commit();
-
-
-                    }
 
                     break;
 

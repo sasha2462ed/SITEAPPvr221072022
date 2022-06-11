@@ -16,6 +16,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,7 +45,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class interfaz_dependiente extends AppCompatActivity {
+public class interfaz_dependiente extends General {
 
     com.nex3z.notificationbadge.NotificationBadge NotificationBadge;
     private ActivityInterfazDependienteBinding v7;
@@ -63,9 +64,10 @@ public class interfaz_dependiente extends AppCompatActivity {
         View view = v7.getRoot();
         setContentView(view);
 
-
         SharedPreferences admin=this.getSharedPreferences("x",MODE_PRIVATE);
         ct=view.getContext();
+        Anyclass Anyclass = new Anyclass();
+        Anyclass.execute();
 
         ///******/////////////////
         String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
@@ -76,7 +78,6 @@ public class interfaz_dependiente extends AppCompatActivity {
                 if(!response.isEmpty()) {
                     try {
                         JSONArray object= null;
-
                         object = new JSONArray(response);
                         Log.i("result","Data: "+response);
 
@@ -91,36 +92,14 @@ public class interfaz_dependiente extends AppCompatActivity {
                             int items = Integer.parseInt(indicencia1.getString("CII").toString());
                             Log.i("results", String.valueOf(items));
 
-
                             v7.badget.setNumber(Integer.parseInt(String.valueOf(items)));
                             v7.badgeu.setNumber(Integer.parseInt(String.valueOf(itemn)));
-
-                            if (Objects.equals(String.valueOf(itemn), "0") && Objects.equals(String.valueOf(items),"0")) {
-                                deleteNotificationChannel();
-                                //onDestroy();
-
-
-
-                            } else {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                                    showNotification();
-                                } else {
-                                    showNewNotification();
-                                }
-                            }
-
-
                         }
-
-
                     }
-
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }else{
-
                 }
             }
         }, new Response.ErrorListener(){
@@ -140,38 +119,19 @@ public class interfaz_dependiente extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
 
-
-
-
-
-
-
-
-
-        /////*****//////
-
-
-
-
-
-
         v7.icono15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),interfaz_notificaciones.class);
                 startActivity(intent);
-
             }
         });
-
-
 
         v7.icono16.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),interfaz_aviso.class);
                 startActivity(intent);
-
             }
         });
 
@@ -181,7 +141,6 @@ public class interfaz_dependiente extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),departamento_administrativo.class);
                 intent.putExtra("trampa", "0");
                 startActivity(intent);
-
             }
         });
 
@@ -191,10 +150,8 @@ public class interfaz_dependiente extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), departamento_tecnico.class);
                 intent.putExtra("trampa", "0");
                 startActivity(intent);
-
             }
         });
-
 
         v7.btnin4.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,7 +159,6 @@ public class interfaz_dependiente extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), interfaz_sugerencia.class);
                 intent.putExtra("trampa", "0");
                 startActivity(intent);
-
             }
         });
 
@@ -212,7 +168,6 @@ public class interfaz_dependiente extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), interfaz_mostrar_incidencias_usuario.class);
                 intent.putExtra("trampa", "0");
                 startActivity(intent);
-
             }
         });
 
@@ -223,7 +178,6 @@ public class interfaz_dependiente extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), interfaz_tecnico_usuario.class);
                 intent.putExtra("trampa", "2");
                 startActivity(intent);
-
             }
         });
 
@@ -233,8 +187,6 @@ public class interfaz_dependiente extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), interfaz_mostrar_incidencias_nivel_tecnico.class);
                 intent.putExtra("trampa", "2");
                 startActivity(intent);
-
-
             }
         });
 
@@ -245,7 +197,6 @@ public class interfaz_dependiente extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(),interfaz_mostrar_graficas.class);
                 intent.putExtra("trampa", "2");
                 startActivity(intent);
-
             }
         });
 
@@ -255,7 +206,6 @@ public class interfaz_dependiente extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), interfaz_envio_notificacion.class);
                 intent.putExtra("trampa", "2");
                 startActivity(intent);
-
             }
         });
 
@@ -268,7 +218,6 @@ public class interfaz_dependiente extends AppCompatActivity {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         manager.createNotificationChannel(CHANNEL);
         showNewNotification();
-
     }
 
     private void showNewNotification() {
@@ -284,21 +233,7 @@ public class interfaz_dependiente extends AppCompatActivity {
         builder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
         managerCompat.notify( 1, builder.build());
-
- //       managerCompat.deleteNotificationChannel("CHANNEL_ID");
-        //NotificationManager managerCompat = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
- //       managerCompat.cancelAll();
-
     }
-
-//    @Override
-//    protected  void onDestroy() {
-//
-//        NotificationManager notificationManager = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
-//        notificationManager.cancelAll();
-//
-//        super.onDestroy();
-//    }
 
  private void setPendingIntent(Class<?> clsActivity){
 
@@ -307,28 +242,7 @@ public class interfaz_dependiente extends AppCompatActivity {
      stackBuilder.addParentStack(clsActivity);
      stackBuilder.addNextIntent(intent);
      pendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
-//     NotificationManager managerCompat = null;
-//     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-//         managerCompat = getApplicationContext().getSystemService(NotificationManager.class);
-//     }
-//     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//         managerCompat.deleteNotificationChannel("CHANNEL_ID");
-//     }
-//     NotificationManager manager = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
-//     manager.cancelAll();
-//     managerCompat = ((NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE));
-//     managerCompat.cancelAll();
-
  }
-///*******//////
-
-
-
-
-
-
-
-
 
  /////******/////
 
@@ -343,14 +257,8 @@ public class interfaz_dependiente extends AppCompatActivity {
         } else {
             NotificationManager manager = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
             manager.cancelAll();
-
         }
-
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -359,26 +267,6 @@ public class interfaz_dependiente extends AppCompatActivity {
         inflador.inflate(R.menu.item_notificacion,menu);
         return super.onCreateOptionsMenu(menu);
 
-/*
-        menuItem = menu.findItem(R.id.notify);
-        if (count == 0) {
-            // if no pending notification remove badge
-            menuItem = menu.findItem(R.id.notify);
-            menuItem.setActionView(null);
-
-        } else {
-            menuItem = menu.findItem(R.id.notify);
-            // if notification than set the badge icon layout
-            menuItem.setActionView(R.layout.notificacion_badge);
-            // get the view from the nav item
-            View view = menuItem.getActionView();
-            // get the text view of the action view for the nav item
-            notification = view.findViewById(R.id.notification);
-            // set the pending notifications value
-            notification.setText(String.valueOf(count));
-
-        }
-*/
     }
 
     @Override
@@ -388,7 +276,6 @@ public class interfaz_dependiente extends AppCompatActivity {
         {
 
             case R.id.cerrar:
-
 
                 SharedPreferences admin=ct.getSharedPreferences("x",ct.MODE_PRIVATE);
                 SharedPreferences.Editor data=admin.edit();
@@ -402,25 +289,103 @@ public class interfaz_dependiente extends AppCompatActivity {
 
                 Intent intent = new Intent( getApplicationContext(),MainActivity.class);
                 startActivity(intent);
-
                 break;
 
-
             case R.id.salir:
-
 
                 finishAffinity();
                 System.exit(0);
 
                 break;
-
-
         }
-
         return super.onOptionsItemSelected(item);
     }
 
+    public class Anyclass extends AsyncTask<Void, Integer, Boolean> {
+        public void inc(){
+            String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
+            StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
+                @Override
+                public void onResponse(String response) {
+                    if(!response.isEmpty()) {
+                        try {
+                            JSONArray object= null;
+                            object = new JSONArray(response);
+                            Log.i("result","Data: "+response);
 
+                            for(int i=0;i<object.length();i++) {
+                                JSONObject indicencia = object.getJSONObject(0);
+                                indicencia.getString("CI");
+                                int itemn = Integer.parseInt(indicencia.getString("CI").toString());
+                                Log.i("resultm", String.valueOf(itemn));
 
+                                JSONObject indicencia1 = object.getJSONObject(1);
+                                indicencia1.getString("CII");
+                                int items = Integer.parseInt(indicencia1.getString("CII").toString());
+                                Log.i("results", String.valueOf(items));
 
+                                if (Objects.equals(String.valueOf(items),"0")) {
+                                    deleteNotificationChannel();
+                                } else {
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                        showNotification();
+                                    } else {
+                                        showNewNotification();
+                                    }
+                                }
+                            }
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                    }
+                }
+            }, new Response.ErrorListener(){
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                }
+
+            }){
+                @Override
+                protected Map<String, String> getParams () throws AuthFailureError {
+                    Map<String,String> parametros = new HashMap<String, String>();
+                    return parametros;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            requestQueue.add(stringRequest);
+        }
+        ///*********//////
+        public void hilo (){
+            try{
+                Thread.sleep(1000);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        public void ejecutar(){
+
+            Anyclass Anyclass = new Anyclass();
+            Anyclass.execute();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+
+            //for(int {i=1; i<3; i++)
+            while(true){
+                hilo();
+                inc();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            ejecutar();
+        }
+    }
 }

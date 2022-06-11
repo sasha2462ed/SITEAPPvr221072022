@@ -24,7 +24,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class interfaz_sugerencia extends AppCompatActivity {
+public class interfaz_sugerencia extends General {
 
     private ActivityInterfazSugerenciaBinding v9;
     RequestQueue requestQueue;
@@ -77,6 +77,8 @@ public class interfaz_sugerencia extends AppCompatActivity {
                 Log.i("oliver",response);
                 if(response.equals("1")){
                     Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
+                    v9.textosuge.getText().clear();
+                    v9.textosugerencia.getText().clear();
 
 
                 }else{
@@ -84,9 +86,6 @@ public class interfaz_sugerencia extends AppCompatActivity {
 
 
                 }
-
-                Intent intent = new Intent( getApplicationContext(),interfaz_sugerencia.class);
-                startActivity(intent);
 
             }
 

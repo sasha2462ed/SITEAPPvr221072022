@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends General {
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding v1;
     Context ct;
@@ -53,6 +53,8 @@ public class MainActivity extends General {
         boolean login=admin.getBoolean("estado",false);
         String tip_usuario=admin.getString("tip_usuario","");
 
+
+
         if(login){
             iniSesion(tip_usuario);
         }
@@ -74,49 +76,11 @@ public class MainActivity extends General {
 
             }
 
-                //if ( validarUsuario("http://192.168.1.4/usuarios_bd/validar_usuario.php" )) {
-                //} else if (v1.txp1.equals("222") && v1.txp2.equals("444")); {
-
-                //Toast.makeText(MainActivity.this, "Ingreso Tecnico", Toast.LENGTH_SHORT).show();
-
-                //Intent intent = new Intent(getApplicationContext(), niveltecnico.class);
-                //startActivity(intent);
-                //}
-
 
         });
     }
 
-    /*
-
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
-            //Acción
-        }
-        return false;
-    }
-
-     */
-
-///////////////***********/
-
-
-
-//    @Override
-//    public void onBackPressed() {
-//        Log.i("result","Para Atraz");
-//    }
-
-
-
-
-///*******************/
-
-
     private void validarUsuario(String URL){
-
-
-
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
             @Override
@@ -142,32 +106,7 @@ public class MainActivity extends General {
                         data.putString("tip_usuario",objUser.getString("tip_usuario"));
                         data.putString("id",objUser.getString("id"));
                         data.putString("ap",objUser.getString("ap"));
-
                         data.apply();
-
-
-
-                       /* if(objUser.getString("tipo").equals("T")){
-
-                            activity = new Intent(getBaseContext(), interfaz_tecnico.class);
-                            *//*activity.putExtra("nomusu",objUser.getString("nombre"));
-                            activity.putExtra("cedula1",objUser.getString("cedula"));*//*
-
-                            //intento del tec
-                        }else if (objUser.getString("tipo").equals("C")){
-                            activity= new Intent(getBaseContext(), interfaz_usuario.class);
-*//*                            activity.putExtra("cedula1",objUser.getString("cedula"));
-                            activity.putExtra("nomusu",objUser.getString("nombre"));*//*
-
-
-                        } else if (objUser.getString("tipo").equals("D")){
-                            activity= new Intent(getBaseContext(), interfaz_dependiente.class);
-                            *//*activity.putExtra("nomusu",objUser.getString("nombre"));
-                            activity.putExtra("cedula1",objUser.getString("cedula"));*//*
-
-                        }
-
-                        startActivity(activity);*/
 
                         iniSesion(objUser.getString("tip_usuario"));
 
@@ -218,24 +157,14 @@ public class MainActivity extends General {
 
         startActivity(activity);
     }
-
-
     @Override
-    protected void onStop(){
-        super.onStop();
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 
+        if (String.valueOf(keyCode).equals(4)) {
+            return false;
+        }
 
-
-
+        return true;
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("result","cerranod");
-
-
-    }
-
 }

@@ -23,7 +23,7 @@ import com.example.siteapp.databinding.ActivityInterfazSugerenciaBinding;
 import java.util.HashMap;
 import java.util.Map;
 
-public class interfaz_envio_notificacion extends AppCompatActivity {
+public class interfaz_envio_notificacion extends General {
 
     private ActivityInterfazEnvioNotificacionBinding v10;
     RequestQueue requestQueue;
@@ -76,6 +76,8 @@ public class interfaz_envio_notificacion extends AppCompatActivity {
                 Log.i("oliver",response);
                 if(response.equals("1")){
                     Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
+                    v10.textonotificacion.getText().clear();
+                    v10.textosunto.getText().clear();
 
 
                 }else{
@@ -84,8 +86,6 @@ public class interfaz_envio_notificacion extends AppCompatActivity {
 
                 }
 
-                Intent intent = new Intent( getApplicationContext(),interfaz_envio_notificacion.class);
-                startActivity(intent);
 
             }
 

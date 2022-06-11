@@ -143,10 +143,18 @@
                         android:visibility="invisible"
                         tools:ignore="HardcodedText" />
 
+                    <Switch
+                        android:id="@+id/switch1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Habilitar edicion"
+                        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvmc1"
+                <EditText
+                    android:id="@+id/tvc1"
                     android:layout_width="220dp"
                     android:layout_height="50dp"
                     android:layout_alignParentTop="true"
@@ -156,107 +164,102 @@
                     android:layout_marginEnd="18dp"
                     android:layout_toEndOf="@+id/linearlayoutlist"
                     android:gravity="center|left"
-                    android:text="TextView"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    tools:ignore="Autofill,SpeakableTextPresentCheck" />
 
                 <TextView
-                    android:id="@+id/tvmc2"
+                    android:id="@+id/tvc2"
                     android:layout_width="220dp"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/tvmc1"
+                    android:layout_below="@+id/tvc1"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="18dp"
                     android:layout_toEndOf="@+id/linearlayoutlist"
                     android:gravity="center|left"
-                    android:text="TextView"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/tvmc3"
+                <EditText
+                    android:id="@+id/tvc3"
                     android:layout_width="220dp"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/tvmc2"
+                    android:layout_below="@+id/tvc2"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="18dp"
                     android:layout_toEndOf="@+id/linearlayoutlist"
                     android:gravity="center|left"
-                    android:text="TextView"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-                <TextView
-                    android:id="@+id/tvmc4"
+                <EditText
+                    android:id="@+id/tvc4"
                     android:layout_width="220dp"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/tvmc3"
+                    android:layout_below="@+id/tvc3"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="18dp"
                     android:layout_toEndOf="@+id/linearlayoutlist"
                     android:gravity="center|left"
-                    android:text="TextView"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-                <TextView
-                    android:id="@+id/tvmc5"
+                <EditText
+                    android:id="@+id/tvc5"
                     android:layout_width="220dp"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/tvmc4"
+                    android:layout_below="@+id/tvc4"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="18dp"
                     android:layout_toEndOf="@+id/linearlayoutlist"
                     android:gravity="center|left"
-                    android:text="TextView"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-                <TextView
-                    android:id="@+id/tvmc6"
+                <EditText
+                    android:id="@+id/tvc6"
                     android:layout_width="220dp"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/tvmc5"
+                    android:layout_below="@+id/tvc5"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="18dp"
                     android:layout_toEndOf="@+id/linearlayoutlist"
                     android:gravity="center|left"
-                    android:text="TextView"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    tools:ignore="SpeakableTextPresentCheck" />
 
-                <TextView
-                    android:id="@+id/tvmc7"
+                <EditText
+                    android:id="@+id/tvc7"
                     android:layout_width="220dp"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/tvmc6"
+                    android:layout_below="@+id/tvc6"
                     android:layout_alignParentEnd="true"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="18dp"
                     android:layout_toEndOf="@+id/linearlayoutlist"
                     android:gravity="center|left"
-                    android:text="TextView"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:ignore="HardcodedText,RtlHardcoded" />
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <Button
+                    android:id="@+id/btn11"
+                    android:layout_width="209dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/tvc7"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="29dp"
+                    android:layout_marginEnd="19dp"
+                    android:text="@string/btn11" />
 
                 <TextView
                     android:id="@+id/Detallec"

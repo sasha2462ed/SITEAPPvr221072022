@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppCompatActivity {
+public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends General {
 
     private ActivityInterfazMostrarIncidenciasTecnicasBinding v29;
     String idCliente;
@@ -104,19 +104,11 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                 intent.putExtra("cedula",cedula);
                 intent.putExtra("departamento",departamento);
                 startActivity(intent);
-
-                    /*Log.i("result","idClient: "+holder.idClient.getText().toString() );
-                    Log.i("result","Comentario: "+holder.comentario.getText().toString() );*/
             }
 
 
         });
 
-
-
-        Log.i("result","IDCLiente: "+idCliente);
-        Log.i("result","IDCLiente: "+idIncidencia);
-       // Log.i("resultverid", trampa);
 
         String URL="http://192.168.101.5/conexion_php/detalle.php";
 
@@ -129,19 +121,19 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                     try {
                         JSONObject objUser= new JSONObject(response.toString());
                         Log.i("result","data:"+response.toString());
-                        /*
 
 
-                        v29.tvm1.setText(objUser.getString("nombre"));
-                        v29.tvm2.setText(objUser.getString("cedula"));
-                        v29.tvm3.setText(objUser.getString("contrasena"));
-                        v29.tvm4.setText(objUser.getString("telefono"));
-                        v29.tvm5.setText(objUser.getString("direccion"));
-                        v29.tvm6.setText(objUser.getString("nodo"));
-                        v29.tvm7.setText(objUser.getString("ap"));
+
+                        v29.tvmc1.setText(objUser.getString("nombre"));
+                        v29.tvmc2.setText(objUser.getString("cedula"));
+                        v29.tvmc3.setText(objUser.getString("contrasena"));
+                        v29.tvmc4.setText(objUser.getString("telefono"));
+                        v29.tvmc5.setText(objUser.getString("direccion"));
+                        v29.tvmc6.setText(objUser.getString("nodo"));
+                        v29.tvmc7.setText(objUser.getString("ap"));
                         v29.tvm9.setText(comentario);
                         v29.tvm8.setText(objUser.getString("estado"));
-*/
+
                     }
 
                     catch (JSONException e) {
@@ -149,8 +141,6 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                     }
 
                 }else{
-                    //Toast.makeText(getApplicationContext(), "Sin datos que mostrar", Toast.LENGTH_SHORT).show();
-                    //Log.i("result","Uhmmmm0955454244");
                 }
             }
         }, new Response.ErrorListener(){
@@ -165,7 +155,6 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
             protected Map<String, String> getParams () throws AuthFailureError {
                 Map<String,String> parametros = new HashMap<String, String>();
                 parametros.put("id", idIncidencia);
-                //parametros.put("idIncidencia", idIncidencia);
 
                 return parametros;
             }
@@ -194,9 +183,6 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                             Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
                         }
 
-                        Intent intent = new Intent( getApplicationContext(),interfaz_mostrar_incidencias_usuario.class);
-                        startActivity(intent);
-
                     }
 
                 }, new Response.ErrorListener(){
@@ -221,9 +207,6 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                 requestQueue = Volley.newRequestQueue(getApplicationContext());
                 requestQueue.add(stringRequest);
 
-
-                    /*Log.i("result","idClient: "+holder.idClient.getText().toString() );
-                    Log.i("result","Comentario: "+holder.comentario.getText().toString() );*/
             }
 
 
@@ -283,10 +266,7 @@ public class interfaz_mostrar_incidencias_tecnicas_nivel_usuario extends AppComp
                     startActivity(intent);
                 }
 
-
                 break;
-
-
 
             }
 
