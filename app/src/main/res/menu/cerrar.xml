@@ -12,7 +12,7 @@
         android:icon="@drawable/ic_launcher_asignament_noti"
         android:title="Item"
         app:showAsAction="always"
-        android:actionLayout="@layout/notificacion_badge"/>
+        android:actionLayout="@layout/notificacion_badgee"/>
 
 
 

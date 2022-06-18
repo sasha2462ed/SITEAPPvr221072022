@@ -33,26 +33,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link frlnAdu#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class frlnAdu extends Fragment {
 
     FragmentFrlnAduBinding layout;
 
     public frlnAdu() {
-        // Required empty public constructor
+
     }
 
     // TODO: Rename and change types and number of parameters
     public static frlnAdu newInstance(String param1, String param2) {
         frlnAdu fragment = new frlnAdu();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
         return fragment;
     }
 
@@ -98,8 +89,6 @@ public class frlnAdu extends Fragment {
                                             indicencia.getString("cedula").toString(),
                                     indicencia.getString("departamento").toString()
 
-
-
                                     )
                             );
                         }
@@ -130,21 +119,16 @@ public class frlnAdu extends Fragment {
             @Override
             protected Map<String, String> getParams () throws AuthFailureError {
                 Map<String,String> parametros = new HashMap<String, String>();
-
                 parametros.put("departamento", String.valueOf(2));
-
                 SharedPreferences admin=requireContext().getSharedPreferences("x", Context.MODE_PRIVATE);
                 String id=admin.getString("id","");
                 parametros.put("id", id);
-
-
 
                 return parametros;
             }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(stringRequest);
-
 
         return v;
 

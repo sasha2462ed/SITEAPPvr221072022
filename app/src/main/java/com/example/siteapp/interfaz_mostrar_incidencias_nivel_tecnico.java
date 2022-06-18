@@ -42,14 +42,11 @@ public class interfaz_mostrar_incidencias_nivel_tecnico extends General {
 
 
     ActivityInterfazMostrarIncidenciasAdministrativasBinding layout;
-    String trampa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         layout=ActivityInterfazMostrarIncidenciasAdministrativasBinding.inflate(getLayoutInflater());
-
         setContentView(layout.getRoot());
 
     }
@@ -65,70 +62,45 @@ public class interfaz_mostrar_incidencias_nivel_tecnico extends General {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        trampa = getIntent().getStringExtra("trampa");
-
-
         SharedPreferences admin=getBaseContext().getSharedPreferences("x", Context.MODE_PRIVATE);
         String tip_usuario=admin.getString("tip_usuario","");
-        Log.i("result","Data: "+tip_usuario);
-        Log.i("result","dependiente: "+trampa);
 
             switch (item.getItemId())
             {
 
                 case R.id.admin:
-
-
-
                         frInAd fr2=new frInAd();
                         FragmentTransaction mFragmentAdmin = getSupportFragmentManager().beginTransaction();
                         mFragmentAdmin.replace(layout.containerFrag.getId(),fr2);
                         mFragmentAdmin.commit();
 
-
-
                     break;
                 case R.id.tecnico:
-
-
                         frInTec fr1 = new frInTec();
                         FragmentTransaction mFragmentTec = getSupportFragmentManager().beginTransaction();
                         mFragmentTec.replace(layout.containerFrag.getId(),fr1);
                         mFragmentTec.commit();
 
-
-
                     break;
-
 
                 case R.id.regre:
 
                     if(tip_usuario.equals("C")){
-
                         Intent intent = new Intent( getApplicationContext(),interfaz_usuario.class);
                         startActivity(intent);
 
                     }
-
                     else if (tip_usuario.equals("T")) {
-
                         Intent intent = new Intent( getApplicationContext(),interfaz_tecnico.class);
                         startActivity(intent);
 
-
                     } else {
-
                         Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
                         startActivity(intent);
-
-
                     }
 
                     break;
-
             }
-
         return super.onOptionsItemSelected(item);
     }
 

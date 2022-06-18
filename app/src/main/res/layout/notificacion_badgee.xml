@@ -32,7 +32,7 @@
         android:padding="3dp"
         android:text=""
         android:textAlignment="center"
-        android:textColor="@android:color/white"
+        android:textColor="@color/red"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/notificacionn"
         app:layout_constraintEnd_toEndOf="@+id/notificacionn"
@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.272"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

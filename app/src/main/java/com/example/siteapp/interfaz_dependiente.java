@@ -1,13 +1,5 @@
 package com.example.siteapp;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -26,6 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,8 +31,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.siteapp.databinding.ActivityInterfazDependienteBinding;
-import com.example.siteapp.databinding.NotificacionBadgeBinding;
-import com.nex3z.notificationbadge.NotificationBadge;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,8 +65,8 @@ public class interfaz_dependiente extends General {
         Anyclass.execute();
 
         ///******/////////////////
-        String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+        String URL3 = "http://192.168.101.5/conexion_php/item_notificacion.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL3, new Response.Listener<String>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(String response) {
@@ -94,6 +89,7 @@ public class interfaz_dependiente extends General {
 
                             v7.badget.setNumber(Integer.parseInt(String.valueOf(items)));
                             v7.badgeu.setNumber(Integer.parseInt(String.valueOf(itemn)));
+
                         }
                     }
                     catch (JSONException e) {
@@ -118,6 +114,7 @@ public class interfaz_dependiente extends General {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
+        /////***********////////
 
         v7.icono15.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,55 +208,6 @@ public class interfaz_dependiente extends General {
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private void showNotification() {
-
-        NotificationChannel CHANNEL = new NotificationChannel (CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        manager.createNotificationChannel(CHANNEL);
-        showNewNotification();
-    }
-
-    private void showNewNotification() {
-
-        setPendingIntent(interfaz_dependiente.class);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
-        .setSmallIcon(R.drawable.ic_notification_add_black_24dp)
-                .setContentTitle("Usted tiene notificaciones pendientes")
-                .setContentText("")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent);
-        builder.setAutoCancel(true);
-        builder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
-        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
-        managerCompat.notify( 1, builder.build());
-    }
-
- private void setPendingIntent(Class<?> clsActivity){
-
-        Intent intent = new Intent(this, clsActivity);
-     TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-     stackBuilder.addParentStack(clsActivity);
-     stackBuilder.addNextIntent(intent);
-     pendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
- }
-
- /////******/////
-
-    public void deleteNotificationChannel(){
-
-    NotificationManager notificationManager =
-            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-    // The id of the channel.
-    String id = "CHANNEL_ID";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            notificationManager.deleteNotificationChannel(id);
-        } else {
-            NotificationManager manager = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
-            manager.cancelAll();
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -301,90 +249,169 @@ public class interfaz_dependiente extends General {
         return super.onOptionsItemSelected(item);
     }
 
-    public class Anyclass extends AsyncTask<Void, Integer, Boolean> {
-        public void inc(){
-            String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
-            StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
-                @RequiresApi(api = Build.VERSION_CODES.O)
-                @Override
-                public void onResponse(String response) {
-                    if(!response.isEmpty()) {
-                        try {
-                            JSONArray object= null;
-                            object = new JSONArray(response);
-                            Log.i("result","Data: "+response);
+    /***************************/
 
-                            for(int i=0;i<object.length();i++) {
-                                JSONObject indicencia = object.getJSONObject(0);
-                                indicencia.getString("CI");
-                                int itemn = Integer.parseInt(indicencia.getString("CI").toString());
-                                Log.i("resultm", String.valueOf(itemn));
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void showNotification() {
 
-                                JSONObject indicencia1 = object.getJSONObject(1);
-                                indicencia1.getString("CII");
-                                int items = Integer.parseInt(indicencia1.getString("CII").toString());
-                                Log.i("results", String.valueOf(items));
+        NotificationChannel CHANNEL = new NotificationChannel (CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        manager.createNotificationChannel(CHANNEL);
+        showNewNotification();
 
-                                if (Objects.equals(String.valueOf(items),"0")) {
-                                    deleteNotificationChannel();
+    }
+
+    private void showNewNotification() {
+
+        setPendingIntent(interfaz_dependiente.class);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification_add_black_24dp)
+                .setContentTitle("Usted tiene notificaciones pendientes")
+                .setContentText("")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent);
+        builder.setAutoCancel(true);
+        builder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getApplicationContext());
+        managerCompat.notify( 1, builder.build());
+    }
+
+
+    private void setPendingIntent(Class<?> clsActivity){
+
+        Intent intent = new Intent(this, clsActivity);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
+        stackBuilder.addParentStack(clsActivity);
+        stackBuilder.addNextIntent(intent);
+        pendingIntent = stackBuilder.getPendingIntent(1, PendingIntent.FLAG_UPDATE_CURRENT);
+
+    }
+///*******//////
+
+    public void deleteNotificationChannel(){
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // The id of the channel.
+        String id = "CHANNEL_ID";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            notificationManager.deleteNotificationChannel(id);
+        } else {
+            NotificationManager manager = ((NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE));
+            manager.cancelAll();
+
+        }
+    }
+/////////****************////////
+
+////***************//////
+
+    public void ejecutar (){
+        new Anyclass().execute();
+    }
+
+////********///////
+
+    /////////***********////////    /
+    public void hilo (){
+        try{
+            Thread.sleep(3000);
+            inc();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    public void inc(){
+        String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(String response) {
+                if(!response.isEmpty()) {
+                    try {
+                        JSONArray object= null;
+                        object = new JSONArray(response);
+                        Log.i("result","Data: "+response);
+
+                        for(int i=0;i<object.length();i++) {
+                            JSONObject indicencia = object.getJSONObject(0);
+                            indicencia.getString("CI");
+                            int itemn = Integer.parseInt(indicencia.getString("CI").toString());
+                            Log.i("resultm", String.valueOf(itemn));
+
+                            JSONObject indicencia1 = object.getJSONObject(1);
+                            indicencia1.getString("CII");
+                            int items = Integer.parseInt(indicencia1.getString("CII").toString());
+                            Log.i("results", String.valueOf(items));
+
+                            if (Objects.equals(String.valueOf(items),"0")&&Objects.equals(String.valueOf(itemn),"0")) {
+                                deleteNotificationChannel();
+                            } else {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                    showNotification();
                                 } else {
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                                        showNotification();
-                                    } else {
-                                        showNewNotification();
-                                    }
+                                    showNewNotification();
                                 }
                             }
                         }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }else{
                     }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
                 }
-            }, new Response.ErrorListener(){
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                }
-
-            }){
-                @Override
-                protected Map<String, String> getParams () throws AuthFailureError {
-                    Map<String,String> parametros = new HashMap<String, String>();
-                    return parametros;
-                }
-            };
-            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-            requestQueue.add(stringRequest);
-        }
-        ///*********//////
-        public void hilo (){
-            try{
-                Thread.sleep(1000);
-
-            } catch (Exception e) {
-                e.printStackTrace();
             }
-        }
-        public void ejecutar(){
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
 
-            Anyclass Anyclass = new Anyclass();
-            Anyclass.execute();
-        }
+        }){
+            @Override
+            protected Map<String, String> getParams () throws AuthFailureError {
+                Map<String,String> parametros = new HashMap<String, String>();
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    /***********/////////
+    public class Anyclass extends AsyncTask<Void, Integer, Boolean> {
+///*********//////
+
 
         @Override
         protected Boolean doInBackground(Void... voids) {
 
-            //for(int {i=1; i<3; i++)
+     /*
             while(true){
-                hilo();
                 inc();
+                hilo();
             }
+ */
+            boolean cot = true;
+            while (cot==true) {
+                for (int i = 1; i < 5; i++) {
+                    hilo();
+                    if (i < 5) {
+                        cot=false;
+                    }
+                }
+            }
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Boolean aBoolean) {
+        protected void onPostExecute (Boolean aBoolean){
+            if( isCancelled() ) {
+                return;
+            }
+
             ejecutar();
         }
     }

@@ -12,11 +12,6 @@ import com.example.siteapp.databinding.FragmentFrInAdBinding;
 import com.example.siteapp.databinding.FragmentFrlnApBinding;
 import com.example.siteapp.databinding.FragmentFrlnTecuBinding;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link frlnAp#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class frlnAp extends Fragment {
 
     FragmentFrlnApBinding layout;

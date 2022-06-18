@@ -35,7 +35,6 @@ public class departamento_tecnico extends General {
 
     RequestQueue requestQueue;
     private ActivityDepartamentoTecnicoBinding v3;
-    DatePickerDialog.OnDateSetListener setListener;
     private ListView lv1;
     Context ct;
     String trampa;
@@ -51,7 +50,6 @@ public class departamento_tecnico extends General {
         ct=view.getContext();
 
 
-
         String URL="http://192.168.101.5/conexion_php/listtec.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
@@ -60,27 +58,20 @@ public class departamento_tecnico extends General {
 
                 try {
                     JSONArray nodos = new JSONArray(response);
-
                     JSONArray id = new JSONArray(nodos.get(0).toString());
                     JSONArray name = new JSONArray(nodos.get(1).toString());
 
                     lv1 = (ListView) findViewById(R.id.lv1);
                     String[] problemas = new String[name.length()];
-
                     JSONObject nods = new JSONObject();
-
 
                     for (int i = 0; i < name.length(); i++) {
                         problemas[i] = name.get(i).toString();
                         nods.put(name.get(i).toString(), id.get(i).toString());
                     }
 
-
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.listview_items, problemas);
                     lv1.setAdapter(adapter);
-
-
-
                     lv1.setOnItemClickListener (new AdapterView.OnItemClickListener() {
 
                         @Override
@@ -89,11 +80,6 @@ public class departamento_tecnico extends General {
                             final String[] valor = {""};
                             valor[0] = problemas[position];
                             Toast.makeText(getApplicationContext(),"Su incidencia es " + valor[0], Toast.LENGTH_SHORT).show();
-
-
-                            Log.i("resultap",valor[0]);
-
-                            //////////*////////////////
 
                             try{
 
@@ -113,11 +99,7 @@ public class departamento_tecnico extends General {
 
                                                 }else{
                                                     Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
-
-
                                                 }
-
-
                                             }
 
                                         }, new Response.ErrorListener(){
@@ -132,45 +114,33 @@ public class departamento_tecnico extends General {
                                                 Map<String,String> parametros = new HashMap<String, String>();
                                                 //parametros.put("id".toString().toString());
                                                 parametros.put("tipo",valor[0].toString());
-                                                Log.i("olivertipo",valor[0]);
                                                 parametros.put("departamento", String.valueOf(1));
                                                 parametros.put("comentario",v3.txp4tec.getText().toString());
                                                 SharedPreferences admin=ct.getSharedPreferences("x",MODE_PRIVATE);
                                                 String id=admin.getString("id","");
                                                 String ap=admin.getString("ap","");
                                                 parametros.put("id_usuarios", id);
-                                                Log.i("oliverid",id);
                                                 parametros.put("ap", ap);
-                                                Log.i("oliverap",ap);
                                                 return parametros;
                                             }
                                         };
                                         requestQueue = Volley.newRequestQueue(getApplicationContext());
                                         requestQueue.add(stringRequest);
-
-
                                     }
                                 });
 
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
                         }
-
                     });
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
 
         }){
@@ -200,7 +170,6 @@ public class departamento_tecnico extends General {
 
                     Intent intent = new Intent( getApplicationContext(),interfaz_dependiente.class);
                     startActivity(intent);
-
 
                 }
             }

@@ -2,10 +2,8 @@ package com.example.siteapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -46,7 +44,7 @@ import java.util.Objects;
 public class interfaz_usuario extends General {
     private ActivityInterfazUsuarioBinding v2;
     String trampa = "0";
-    int count;
+    int count ;
     Context ct;
     MenuItem menuItem;
     TextView notification;
@@ -63,59 +61,12 @@ public class interfaz_usuario extends General {
         View view = v2.getRoot();
         setContentView(view);
 
-        SharedPreferences admin=this.getSharedPreferences("x",MODE_PRIVATE);
-        String tip_usuario=admin.getString("tip_usuario","");
+
         ct=view.getContext();
         new Anyclass().execute();
 
-
-        String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onResponse(String response) {
-                if(!response.isEmpty()) {
-                    try {
-                        JSONArray object= null;
-
-                        object = new JSONArray(response);
-                        Log.i("result","Data: "+response);
-
-                        for(int i=0;i<object.length();i++) {
-                            JSONObject indicencia = object.getJSONObject(0);
-                            indicencia.getString("CI");
-                            int itemn = Integer.parseInt(indicencia.getString("CI").toString());
-                            Log.i("resultm", String.valueOf(itemn));
-
-                            JSONObject indicencia1 = object.getJSONObject(1);
-                            indicencia1.getString("CII");
-                            int items = Integer.parseInt(indicencia1.getString("CII").toString());
-                            Log.i("results", String.valueOf(items));
-
-                            count=itemn;
-                        }
-                    }
-                    catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                }
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-        }){
-            @Override
-            protected Map<String, String> getParams () throws AuthFailureError {
-                Map<String,String> parametros = new HashMap<String, String>();
-                return parametros;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(stringRequest);
+        ///****************//////
+        ////**********///////////
 
         v2.btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +113,128 @@ public class interfaz_usuario extends General {
         });
 
     }
+
+    /***************************/
+    public int inc(){
+        String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(String response) {
+                if(!response.isEmpty()) {
+                    try {
+                        JSONArray object= null;
+                        object = new JSONArray(response);
+                        Log.i("result","Data: "+response);
+
+                        for(int i=0;i<object.length();i++) {
+                            JSONObject indicencia = object.getJSONObject(0);
+                            indicencia.getString("CI");
+                            int itemn = Integer.parseInt(indicencia.getString("CI").toString());
+                            Log.i("resultm", String.valueOf(itemn));
+
+                            count=itemn;
+                            if (count==0){}else{
+                                menuItem.setActionView(R.layout.notificacion_badgee);
+                                // get the view from the nav item
+                                View view = menuItem.getActionView();
+                                // get the text view of the action view for the nav item
+                                notification = view.findViewById(R.id.notification);
+                                //notification.setEnabled(false);
+                                // set the pending notifications value
+                                notification.setText(String.valueOf(count));
+
+                                notification.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Log.i("result","xxxxxxxxxxxxxxxxxxxxxx");
+                                        Intent intent = new Intent(getApplicationContext(), interfaz_notificaciones.class);
+                                        startActivity(intent);
+
+                                    }
+                                });}
+
+                            if (Objects.equals(String.valueOf(itemn),"0")) {
+                                deleteNotificationChannel();
+                            } else {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                                    showNotification();
+                                } else {
+                                    showNewNotification();
+                                }
+                            }
+                        }
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                }
+            }
+        }, new Response.ErrorListener(){
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+        }){
+            @Override
+            protected Map<String, String> getParams () throws AuthFailureError {
+                Map<String,String> parametros = new HashMap<String, String>();
+                return parametros;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
+        return count;
+
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflador=getMenuInflater();
+        inflador.inflate(R.menu.cerrar,menu);
+        menuItem = menu.findItem(R.id.notify);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId())
+        {
+
+            case R.id.cerrar:
+
+                SharedPreferences admin=ct.getSharedPreferences("x",ct.MODE_PRIVATE);
+                SharedPreferences.Editor data=admin.edit();
+                data.remove("estado");
+                data.remove("nombre");
+                data.remove("cedula");
+                data.remove("tip_usuario");
+                data.remove("id");
+                data.remove("ap");
+                data.apply();
+
+                Intent intent = new Intent( getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+
+                break;
+
+            case R.id.notify:
+
+                intent = new Intent(getApplicationContext(), interfaz_notificaciones.class);
+                startActivity(intent);
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    /***************************/
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void showNotification() {
 
@@ -213,172 +286,60 @@ public class interfaz_usuario extends General {
 
         }
     }
+/////////****************////////
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        MenuInflater inflador=getMenuInflater();
-        inflador.inflate(R.menu.cerrar,menu);
-
-        menuItem = menu.findItem(R.id.notify);
-        if (count == 0) {
-            // if no pending notification remove badge
-            menuItem = menu.findItem(R.id.notify);
-            //menuItem.setActionView(null);
-
-        } else {
-
-            // if notification than set the badge icon layout
-            menuItem.setActionView(R.layout.notificacion_badge);
-            // get the view from the nav item
-            View view = menuItem.getActionView();
-            // get the text view of the action view for the nav item
-            notification = view.findViewById(R.id.notification);
-            //notification.setEnabled(false);
-            // set the pending notifications value
-            notification.setText(String.valueOf(count));
-            menuItem = menu.findItem(R.id.notify);
-
-            notification.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("result","xxxxxxxxxxxxxxxxxxxxxx");
-                    Intent intent = new Intent(getApplicationContext(), interfaz_notificaciones.class);
-                    startActivity(intent);
-
-                }
-            });
-
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId())
-        {
-
-            case R.id.cerrar:
-
-                SharedPreferences admin=ct.getSharedPreferences("x",ct.MODE_PRIVATE);
-                SharedPreferences.Editor data=admin.edit();
-                data.remove("estado");
-                data.remove("nombre");
-                data.remove("cedula");
-                data.remove("tip_usuario");
-                data.remove("id");
-                data.remove("ap");
-                data.apply();
-
-                Intent intent = new Intent( getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-
-                break;
-
-            case R.id.notify:
-
-                intent = new Intent(getApplicationContext(), interfaz_notificaciones.class);
-                startActivity(intent);
-
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 ////***************//////
+
+    public void ejecutar (){
+        new Anyclass().execute();
+    }
 
 ////********///////
 
-    public void inc(){
-        String URL = "http://192.168.101.5/conexion_php/item_notificacion.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onResponse(String response) {
-                if(!response.isEmpty()) {
-                    try {
-                        JSONArray object= null;
-                        object = new JSONArray(response);
-                        Log.i("result","Data: "+response);
+    /////////***********////////    /
+    public void hilo (){
+        try{
+            Thread.sleep(3000);
+            inc();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
 
-                        for(int i=0;i<object.length();i++) {
-                            JSONObject indicencia = object.getJSONObject(0);
-                            indicencia.getString("CI");
-                            int itemn = Integer.parseInt(indicencia.getString("CI").toString());
-                            Log.i("resultm", String.valueOf(itemn));
-
-                            JSONObject indicencia1 = object.getJSONObject(1);
-                            indicencia1.getString("CII");
-                            int items = Integer.parseInt(indicencia1.getString("CII").toString());
-                            Log.i("results", String.valueOf(items));
-                            if (Objects.equals(String.valueOf(itemn),"0")) {
-                                deleteNotificationChannel();
-                            } else {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                                    showNotification();
-                                } else {
-                                    showNewNotification();
-                                }
-                            }
-                        }
-                    }
-                    catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                }
-            }
-        }, new Response.ErrorListener(){
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-            }
-
-        }){
-            @Override
-            protected Map<String, String> getParams () throws AuthFailureError {
-                Map<String,String> parametros = new HashMap<String, String>();
-                return parametros;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(stringRequest);
+        }
     }
 
-/////////***********////////    /
-public void hilo (){
-    try{
-        Thread.sleep(1000);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-
-    }
-}
-
-/***********/////////
+    /***********/////////
     public class Anyclass extends AsyncTask<Void, Integer, Boolean> {
 ///*********//////
 
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-/*
+
+     /*
             while(true){
                 inc();
                 hilo();
             }
-
  */
-            for(int i=1; i<10; i++){
-                inc();
-                hilo();
+            boolean cot = true;
+            while (cot==true) {
+                for (int i = 1; i < 3; i++) {
+                    hilo();
+                    if (i < 3) {
+                        cot=false;
+                    }
+                }
             }
             return true;
         }
 
+            @Override
+            protected void onPostExecute (Boolean aBoolean){
+                if( isCancelled() ) {
+                    return;
+                }
 
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-
+                ejecutar();
+            }
         }
-    }
 }

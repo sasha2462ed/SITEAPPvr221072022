@@ -19,7 +19,6 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ContenetViews> {
 
     ArrayList<Incidencias> items;
 
-
     public myAdapter(ArrayList<Incidencias> items) {
 
         this.items=items;
@@ -46,16 +45,11 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ContenetViews> {
         holder.fecha.setText(items.get(position).hora);
         holder.estado.setText(items.get(position).estado);
         holder.idClient.setText(items.get(position).idUser);
-        /***/
-        /***/
 
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                    /***/
-                    /*****/
-                    // v.getContext().startActivity(new Intent(v.getContext(),interfaz_mostrar_incidencias_tecnicas_nivel_usuario.class));
                     Intent intent=new Intent(v.getContext(),interfaz_mostrar_incidencias_tecnicas_nivel_usuario.class);
                     intent.putExtra("idClient",holder.idClient.getText().toString());
                     intent.putExtra("idIncidencia",idIncidencias);
@@ -65,12 +59,9 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ContenetViews> {
                     intent.putExtra("comentario",holder.comentario.getText().toString());
                     v.getContext().startActivity(intent);
 
-                    /*Log.i("result","idClient: "+holder.idClient.getText().toString() );
-                    Log.i("result","Comentario: "+holder.comentario.getText().toString() );*/
             }
         });
 
-        /**/
     }
 
     @Override
@@ -78,11 +69,7 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ContenetViews> {
         return items.size();
     }
 
-    /*@Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.i("result","Item: "+String.valueOf(id));
-    }
-*/
+
     public class ContenetViews extends RecyclerView.ViewHolder {
 
         CardView cv;
@@ -105,26 +92,9 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ContenetViews> {
             icono=itemView.findViewById(R.id.icono);
             idClient=itemView.findViewById(R.id.estado);
 
-            /*cv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("result","CardView");
-                }
-            });*/
-
-
-
         }
 
 
     }
-
-//    public void updateData(ArrayList<Incidencias> items) {
-//        this.items = items;
-////        items.clear();
-////        items.addAll(items);
-//
-//        //notifyDataSetChanged();
-//    }
 
 }

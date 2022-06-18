@@ -41,24 +41,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         v1 = ActivityMainBinding.inflate(getLayoutInflater());
         View view = v1.getRoot();
-
-        sesion=v1.checkBox;
-
         setContentView(view);
 
+        sesion=v1.checkBox;
         ct=view.getContext();
-
-
         SharedPreferences admin=getApplicationContext().getSharedPreferences("x",MODE_PRIVATE);
         boolean login=admin.getBoolean("estado",false);
         String tip_usuario=admin.getString("tip_usuario","");
 
-
-
         if(login){
             iniSesion(tip_usuario);
         }
-
 
         v1.btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,10 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         validarUsuario("http://192.168.101.5/conexion_php/validar_usuario.php");
                     }
                 }
-
             }
-
-
         });
     }
 
@@ -88,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 if(!response.isEmpty()) {
                     try {
                         JSONObject objUser= new JSONObject(response);
-
-
                         Toast.makeText( MainActivity.this, "Bienvenido "+objUser.getString("nombre"), Toast.LENGTH_SHORT).show();
                         Intent activity=null;
 
@@ -114,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("Error",e.getMessage());
                     }
 
-
                 }else{
                     Toast.makeText(MainActivity.this, "usuario/contrasena incorrecto", Toast.LENGTH_SHORT).show();
                 }
@@ -124,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(MainActivity.this,error.toString(), Toast.LENGTH_SHORT).show();
-
             }
 
         }){
@@ -138,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-        //return false;
     }
 
 

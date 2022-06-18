@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.siteapp"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -13,7 +13,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SITEAPP"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup" >
+        <service
+            android:name=".miservicio"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
         <activity
             android:name=".onboarding"
             android:exported="true" />
@@ -28,8 +34,7 @@
         </activity>
         <activity
             android:name=".oanbording"
-            android:exported="true"/>
-
+            android:exported="true" />
         <activity
             android:name=".interfaz_consultar"
             android:exported="true" />
@@ -95,7 +100,7 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
