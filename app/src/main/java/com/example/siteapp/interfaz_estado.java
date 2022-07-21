@@ -90,46 +90,7 @@ public class interfaz_estado extends General {
             @Override
             public void onClick(View v) {
 
-                String URL11 = "http://192.168.101.5/conexion_php/insertar_cierre.php";
 
-                StringRequest stringRequest11 = new StringRequest(Request.Method.POST, URL11, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("oliver", response);
-                        if (response.equals("1")) {
-                            Toast.makeText(getBaseContext(), "Comentario agregado", Toast.LENGTH_SHORT).show();
-                            v30.resoluciong.getText().clear();
-
-
-                        } else {
-                            Toast.makeText(getBaseContext(), "Comentario no agregado ", Toast.LENGTH_SHORT).show();
-
-                        }
-
-                    }
-
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> parametros = new HashMap<String, String>();
-                        //parametros.put("id".toString().toString());
-                        parametros.put("id_user", idCliente );
-                        parametros.put("id_inc", idIncidencia);
-                        parametros.put("cierre", v30.resoluciong.getText().toString().trim());
-
-
-
-                        return parametros;
-                    }
-                };
-                requestQueue = Volley.newRequestQueue(getApplicationContext());
-                requestQueue.add(stringRequest11);
 
             }
         });
@@ -179,42 +140,100 @@ public class interfaz_estado extends General {
                                     @Override
                                     public void onClick(View v) {
 
-                                        String URL1 = "http://192.168.101.5/conexion_php/modificar_estado.php";
 
-                                        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL1, new Response.Listener<String>() {
-                                            @Override
-                                            public void onResponse(String response) {
-                                                Log.i("oliver", response);
-                                                if (response.equals("1")) {
-                                                    Toast.makeText(getBaseContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
+                                        if (v30.resoluciong.getText().toString().isEmpty()) {
+                                            Toast.makeText(getApplicationContext(), "Campo resolucion vacio", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                        else {
+
+                                            String URL1 = "http://192.168.101.5/conexion_php/modificar_estado.php";
+
+                                            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL1, new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Log.i("oliver", response);
+                                                    if (response.equals("1")) {
+                                                        //Toast.makeText(getApplicationContext(), "OPERACION EXITOSA", Toast.LENGTH_SHORT).show();
 
 
-                                                } else {
-                                                    Toast.makeText(getBaseContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        //Toast.makeText(getApplicationContext(), "OPERACION FALLIDA ", Toast.LENGTH_SHORT).show();
+
+                                                    }
 
                                                 }
 
-                                            }
+                                            }, new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                                                }
 
-                                        }, new Response.ErrorListener() {
-                                            @Override
-                                            public void onErrorResponse(VolleyError error) {
-                                                Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
-                                            }
+                                            }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> parametros = new HashMap<String, String>();
+                                                    //parametros.put("id".toString().toString());
+                                                    parametros.put("estado", String.valueOf(state));
+                                                    parametros.put("idIncidencia", idIncidencia);
 
-                                        }) {
-                                            @Override
-                                            protected Map<String, String> getParams() throws AuthFailureError {
-                                                Map<String, String> parametros = new HashMap<String, String>();
-                                                //parametros.put("id".toString().toString());
-                                                parametros.put("estado", String.valueOf(state));
-                                                parametros.put("idIncidencia", idIncidencia);
+                                                    return parametros;
+                                                }
+                                            };
+                                            requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                            requestQueue.add(stringRequest);
 
-                                                return parametros;
-                                            }
-                                        };
-                                        requestQueue = Volley.newRequestQueue(getApplicationContext());
-                                        requestQueue.add(stringRequest);
+
+                                            //////************////////
+                                            String URL11 = "http://192.168.101.5/conexion_php/insertar_cierre.php";
+
+                                            StringRequest stringRequest11 = new StringRequest(Request.Method.POST, URL11, new Response.Listener<String>() {
+                                                @Override
+                                                public void onResponse(String response) {
+                                                    Log.i("oliver", response);
+                                                    if (response.equals("1")) {
+                                                        Toast.makeText(getApplicationContext(), "Resolucion agregada", Toast.LENGTH_SHORT).show();
+                                                        v30.resoluciong.getText().clear();
+
+
+                                                    } else {
+                                                        Toast.makeText(getApplicationContext(), "Resolucion no agregada ", Toast.LENGTH_SHORT).show();
+
+                                                    }
+
+                                                }
+
+                                            }, new Response.ErrorListener() {
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                                                }
+
+                                            }) {
+                                                @Override
+                                                protected Map<String, String> getParams() throws AuthFailureError {
+                                                    Map<String, String> parametros = new HashMap<String, String>();
+                                                    //parametros.put("id".toString().toString());
+                                                    parametros.put("id_user", idCliente );
+                                                    parametros.put("id_inc", idIncidencia);
+                                                    parametros.put("cierre", v30.resoluciong.getText().toString().trim());
+
+
+
+                                                    return parametros;
+                                                }
+                                            };
+                                            requestQueue = Volley.newRequestQueue(getApplicationContext());
+                                            requestQueue.add(stringRequest11);
+                                            ///////*********////////
+
+
+
+
+                                        }
+
+
 
 
                                     }

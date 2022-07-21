@@ -135,7 +135,6 @@ public class departamento_administrativo extends General {
                                                 Map<String,String> parametros = new HashMap<String, String>();
                                                 //parametros.put("id".toString().toString());
                                                 parametros.put("tipo",valor1[0].toString());
-                                                Log.i("olivertipo",valor1[0]);
                                                 parametros.put("departamento", String.valueOf(2));
                                                 parametros.put("comentario",v4.txp4adm.getText().toString());
                                                 SharedPreferences admin=ct.getSharedPreferences("x",MODE_PRIVATE);
@@ -144,7 +143,6 @@ public class departamento_administrativo extends General {
                                                 parametros.put("id_usuarios", id);
                                                 Log.i("oliverid",id);
                                                 parametros.put("ap", ap);
-                                                Log.i("oliverap",ap);
                                                 return parametros;
                                             }
                                         };
